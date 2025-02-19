@@ -18,7 +18,7 @@ Additional Sources: Other open datasets related to film soundtracks and musical 
 
 Repository Structure
 
-📂 Musical_Diversity_in_Movies_Proposal.md – The project proposal outlining objectives, methodologies, and expected outcomes.📂 data/ – Placeholder for datasets (not included in the repo due to size limitations; instructions on obtaining the data will be provided).📂 notebooks/ – Jupyter notebooks for data exploration, transformation, and visualization.📂 scripts/ – Python scripts for data processing and integration.📂 results/ – Final reports, charts, and summary analyses.
+📂 Musical_Diversity_in_Movies_Proposal.md – The project proposal outlining objectives, methodologies, and expected outcomes.📂  data/ – Placeholder for datasets (not included in the repo due to size limitations; instructions on obtaining the data will be provided).  📂 notebooks/ – Jupyter notebooks for data exploration, transformation, and visualization.📂  scripts/ – Python scripts for data processing and integration.📂  results/ – Final reports, charts, and summary analyses.
 
 GitHub Pages
 
