@@ -2,56 +2,118 @@ Musical Diversity in Movies: A Capstone Proposal
 
 Project Overview
 
-The project aims to analyze and visualize the diversity of musical genres in movie soundtracks over time. By integrating data from MusicBrainz (primary source) and enriching it with complementary datasets, this project will explore how genre diversity correlates with movie success metrics, such as box office revenue or critical acclaim.
+This project aims to analyze how musical genres in movie soundtracks correlate with critical and audience reception over time. By integrating data from MusicBrainz (primary source) and Rotten Tomatoes/IMDb, we will explore trends in soundtrack composition and their relationship with movie ratings.
 
 Problem Statement
 
-Soundtracks play a significant role in shaping the identity and emotional impact of movies, yet the diversity of genres used in films remains underexplored. Filmmakers and music supervisors could benefit from insights into how musical diversity impacts audience reception and critical success.
+Soundtracks play a significant role in shaping the identity and emotional impact of movies. While music enhances storytelling, its relationship with a film's critical and audience reception remains largely unexplored. This project will analyze:
+
+How musical genres in film soundtracks have evolved over time.
+
+Whether films with more diverse soundtracks tend to receive higher ratings.
+
+Which soundtrack genres are most common in critically acclaimed films.
+
+Which directors and composers tend to experiment with musical diversity.
+
+By examining these questions, this project will provide valuable insights for filmmakers, music supervisors, and film historians.
+
+Context and Client Use Case
+
+Understanding soundtrack trends and their potential influence on film reception is valuable for:
+
+Filmmakers & Music Supervisors: To see how soundtrack trends impact film reception.
+
+Composers: To understand which soundtrack styles are most commonly associated with high-rated films.
+
+Film Historians: To analyze changes in soundtrack composition over time.
+
+This project provides data-driven insights into film music trends, helping creatives make informed decisions about soundtrack composition.
+
+Criteria for Success
+
+Success will be measured by:
+
+Successfully ingesting, cleaning, and storing at least 1,000 movie soundtrack records.
+
+Correlating soundtrack genre diversity with IMDb/Rotten Tomatoes scores and visualizing trends.
+
+Identifying at least 3-5 major trends in soundtrack composition over the decades.
+
+Building an interactive dashboard showcasing findings.
 
 Datasets
 
 MusicBrainz:
 
-Provides detailed metadata on songs, artists, and genres.
+Provides structured metadata on songs, artists, and genres.
 
-Use: As the primary dataset for song and genre information.
+Use: Extract soundtrack genre information for films.
 
-The Movie Database (TMDb):
+The Movie Database (TMDb) & IMDb:
 
-Extensive metadata about movies, including ratings and reviews.
+Offers metadata, including movie ratings and user reviews.
 
-Use: To connect songs to movies and gather movie-related data.
+Use: Correlate soundtrack genres with critical and audience reception.
 
 Last.fm:
 
 User-generated tags for refining genre classifications.
 
-Use: To enhance the genre metadata from MusicBrainz and TMDb.
+Use: Enhance and normalize genre data from MusicBrainz.
 
-Project Objectives
+Proposed Architecture
 
-Build a scalable data pipeline to extract, transform, and load (ETL) data from MusicBrainz, TMDb, and Last.fm.
+Extract:
 
-Enrich movie soundtrack data with additional metadata from complementary sources.
+Query MusicBrainz, TMDb, IMDb, and Last.fm APIs to collect movie metadata, soundtrack data, and genre tags.
 
-Analyze genre diversity trends over time and their relationship to movie success metrics.
+Transform:
 
-Create visualizations to showcase findings, such as:
+Clean and normalize genre labels across datasets.
 
-Trends in genre diversity for award-winning films.
+Deduplicate records and resolve inconsistencies in movie titles.
 
-Most and least diverse genres in movies over decades.
+Load:
 
-Expected Outcomes
+Store structured data in Azure SQL Server.
 
-A clear understanding of how musical diversity has evolved in movie soundtracks.
+Scale to Apache Spark in Phase 2 for large-scale processing.
 
-Insights into the potential impact of genre diversity on a movie’s success.
+Analyze:
 
-Tools & Technologies
+Query datasets to compare genre diversity with movie ratings.
 
-Data Ingestion: MusicBrainz, TMDb, and Last.fm APIs.
+Visualize:
 
-Data Processing: Python, PostgreSQL (local prototype), Apache Spark (scaling in Phase 2).
+Use Power BI or Tableau to display trends.
 
-Visualization: Power BI, Tableau, or Python libraries (Matplotlib, Seaborn).
+Technologies Used
+
+Programming & Data Processing: Python, SQL
+
+Data Storage: Azure SQL Server (primary), Apache Spark (scalable processing in Phase 2)
+
+Cloud Platform: Azure
+
+Version Control: Git & GitHub
+
+ETL & Pipeline Management: Python-based ETL, Dockerized pipeline for deployment
+
+Visualization: Power BI, Tableau, Matplotlib, Seaborn
+
+Deliverables
+
+GitHub Repository containing:
+
+Python scripts & Jupyter Notebooks for ETL processing.
+
+Azure SQL schema & queries.
+
+Power BI/Tableau Dashboards visualizing trends.
+
+README file documenting findings.
+
+Final Slide Deck summarizing insights.
+
+This revised proposal ensures full alignment with Step 2 requirements, with Azure SQL Server as the backend and Apache Spark as a potential Phase 2 enhancement. The addition of containerization makes the ETL process scalable and modern, aligning with real-world data engineering practices.
