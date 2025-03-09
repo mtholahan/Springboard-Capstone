@@ -1,8 +1,7 @@
 # Musical Diversity in Movies
 
 ## Overview
-This is my **Springboard Data Engineering Capstone Project**, which analyzes the diversity of musical genres in movie soundtracks over time.  
-By integrating data from **MusicBrainz, IMDb, and Last.fm**, this project explores how **genre diversity** correlates with movie success.
+This is my Springboard Data Engineering Capstone Project, which analyzes the diversity of musical genres in movie soundtracks over time. By integrating data from MusicBrainz, TMDb, IMDb, Rotten Tomatoes, and Last.fm, this project explores how soundtrack genre diversity correlates with critical and audience reception. It aims to identify trends in soundtrack composition across different decades and assess whether certain genres are more commonly associated with highly-rated films.
 
 📄 **[Read the full project proposal](Docs/Musical_Diversity_in_Movies_Proposal.md)**
 
