@@ -38,6 +38,14 @@ This project provides insightful, data-driven trends in film music, helping indu
 
 🔖 Last.fm – User-generated tags for refining genre classifications.
 
+| **Dataset**                 | **Size & Coverage**                                             | **Storage Requirements**                  |
+|-----------------------------|----------------------------------------------------------------|------------------------------------------|
+| **MusicBrainz**             | 2.5M artists, 4.6M releases, 34.7M recordings                  | ~60GB for full database setup           |
+| **The Movie Database (TMDb)** | 569K+ movies                                                 | ~3.5GB for full dataset                 |
+| **IMDb**                    | Larger than TMDb (exact size undisclosed)                      | Significantly larger than TMDb          |
+| **Last.fm**                 | 1.38M artists, 3.3M releases, 26.5M tracks                     | No official full dataset, available via API |
+
+
 🔗 Proposed Architecture
 
 Extract – Query MusicBrainz, TMDb, IMDb, and Last.fm APIs to collect movie metadata, soundtrack data, and genre tags.
