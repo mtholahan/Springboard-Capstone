@@ -1,49 +1,83 @@
-# Musical Diversity in Movies
+# 🎬 Musical Diversity in Movies – Springboard Capstone
 
-## Overview
-This is my Springboard Data Engineering Capstone Project, which analyzes the diversity of musical genres in movie soundtracks over time. By integrating data from MusicBrainz, TMDb, IMDb, Rotten Tomatoes, and Last.fm, this project explores how soundtrack genre diversity correlates with critical and audience reception. It aims to identify trends in soundtrack composition across different decades and assess whether certain genres are more commonly associated with highly-rated films.
+## 📌 Project Overview
+
+This capstone project explores the relationship between a film’s **soundtrack genre diversity** and its **movie-level metadata**, such as popularity, release year, and genre classification.
+
+By integrating soundtrack data from **MusicBrainz** with enriched movie data from **TMDb**, the project builds a normalized dataset that enables querying, visualization, and downstream modeling.
 
 📄 **[Read the full project proposal](Docs/Musical_Diversity_in_Movies_Proposal.md)**
 
-## Data Sources
-- **MusicBrainz** – Primary music metadata source.
-- **IMDb** – Movie metadata, including ratings and genres.
-- **Last.fm** – User-generated tags for refining genre classifications.
+---
 
-## Repository Structure
-📂 `Docs/` – Contains the full project proposal and research.  
-📂 `data/` – Placeholder for datasets (**not included** in the repo due to size limitations).  
-📂 `notebooks/` – Jupyter notebooks for data exploration and analysis.  
-📂 `scripts/` – Python scripts for data processing and integration.  
-📂 `results/` – Final reports, charts, and summary analyses.
+## 📚 Data Sources
 
-## Next Steps
-✔ Data acquisition & cleaning  
-✔ Exploratory data analysis  
-✔ Building & optimizing data pipelines  
-✔ Visualizing trends & insights  
+| Source       | Description                                  | Status             |
+|--------------|----------------------------------------------|--------------------|
+| MusicBrainz  | Soundtrack metadata (title, artist, release) | ✅ Cleaned & loaded |
+| TMDb         | Movie metadata (title, popularity, genres)   | ✅ API enrichment   |
+| IMDb         | Movie scores and metadata                    | ❌ Not used         |
+| Last.fm      | Listener-based tags                          | 🔄 Deferred         |
+
+---
+
+## 🗂 Repository Structure
+
+| Folder       | Description                                      |
+|--------------|--------------------------------------------------|
+| `Docs/`      | Proposal and architecture notes                  |
+| `notebooks/` | Data exploration, enrichment, and summary work   |
+| `scripts/`   | ETL and enrichment pipeline scripts (`02`–`10`)  |
+| `results/`   | (Optional) Final exports or joins                |
+| `slides/`    | Slide decks for review and final submission      |
+| `data/`      | Raw `.tsv` and `.csv` files (excluded from repo) |
+
+---
+
+## 🧱 Architecture Overview
+
+This project uses a modular, script-driven pipeline supported by Jupyter notebooks for exploratory work:
+
+```
+Raw TSVs → PostgreSQL → Soundtrack Filtering → TMDb Enrichment → Fuzzy Matching → Final Schema
+```
+
+- Python scripts (`02`–`10`) handle data loading, enrichment, and matching
+- PostgreSQL serves as the central data store
+- Final schema includes genre-normalized join tables for easy querying
 
 ---
 
 ## ✅ Step 4: Data Exploration & Enrichment
 
-This step focused on verifying data quality, performing enrichment from TMDb, and linking soundtrack releases to movie metadata.
+This step focused on verifying data quality, enriching movies via TMDb, and establishing fuzzy match pipelines to link soundtracks to their corresponding films.
 
 ### Key Deliverables:
-- 📓 [`Capstone_Step_4_Analysis.ipynb`](notebooks/Capstone_Step_4_Analysis.ipynb): Full column homogeneity checks across 10 tables
-- 📘 [`Step_4_wrapup.ipynb`](notebooks/Step_4_wrapup.ipynb): Final Q&A (Questions 1–5), ERD, and storage strategy
-- 🧩 [`Step_4_ERD.png`](notebooks/Step_4_ERD.png): Visual entity-relationship diagram for final schema
-- 📽️ [`Step_4_Slide_Deck.pptx`](slides/Step_4_Slide_Deck.pptx): Slide deck summarizing Step 4 process
-- 🛠 Scripts `02`–`10`: ETL pipeline for soundtrack filtering, TMDb enrichment, and fuzzy matching
+- 📓 [`Capstone_Step_4_Analysis.ipynb`](notebooks/Capstone_Step_4_Analysis.ipynb) – Column homogeneity checks across 10 tables
+- 📘 [`Step_4_wrapup.ipynb`](notebooks/Step_4_wrapup.ipynb) – Final Q&A, ERD, and storage discussion
+- 🧩 [`Step_4_ERD.png`](notebooks/Step_4_ERD.png) – Visual schema overview (PostgreSQL)
+- 📽️ [`Step_4_Slide_Deck.pptx`](slides/Step_4_Slide_Deck.pptx) – Slide walkthrough of enrichment process
 
 ### Outcome:
-- All columns were verified for homogeneity
-- Final PostgreSQL schema supports joinable, genre-enriched soundtrack data
-- Project is now ready for SQL-based exploration, modeling, or feature engineering
+- Clean, validated soundtrack and movie data in PostgreSQL
+- Genre-normalized structure enables deep exploration
+- Ready for modeling, visualization, or feature engineering in Step 5
 
-## Contact
-For questions or collaboration opportunities, reach out via **GitHub Issues**.
+---
 
-🚧 **This repository is a work in progress as part of my Data Engineering Bootcamp.** Stay tuned for updates! 🚧
+## 📈 Next Steps
 
-<!-- Last updated: Sat, 12-April-2025 -->
+- Finalize genre diversity scoring strategy
+- Visualize genre diversity trends by decade
+- Model correlation between genre diversity and movie popularity
+- Deploy or publish key insights as part of final deliverable
+
+---
+
+## 🤝 Contact
+
+For questions or collaboration, feel free to reach out via **GitHub Issues**.
+
+🚧 **This project is part of my Springboard Data Engineering Bootcamp. Stay tuned for updates as it progresses!** 🚧
+
+<!-- Last updated: Sat, 13-April-2025 -->

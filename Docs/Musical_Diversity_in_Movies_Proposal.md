@@ -1,67 +1,70 @@
-🎬 Musical Diversity in Movies: A Capstone Proposal 🎶
+# Musical Diversity in Movies – Project Proposal
 
-📌 Project Overview
+## 🎯 Project Overview
 
-This project aims to analyze how musical genres in movie soundtracks correlate with critical and audience reception over time. By integrating data from MusicBrainz (primary source) and Rotten Tomatoes/IMDb, we will explore trends in soundtrack composition and their relationship with movie ratings.
+This capstone project explores the relationship between a film's **soundtrack genre diversity** and its **metadata**, including popularity, release year, and genre classification. 
 
-🎭 Problem Statement
+By integrating MusicBrainz (primary soundtrack source) with enriched movie data from **TMDb**, the project analyzes how musical diversity trends align with broader cinematic patterns.
 
-Soundtracks play a significant role in shaping the identity and emotional impact of movies. While music enhances storytelling, its relationship with a film's critical and audience reception remains largely unexplored.
+---
 
-Key Questions:
+## ❓ Problem Statement
 
-🎼 How have musical genres in film soundtracks evolved over time?📊 Do films with diverse soundtracks tend to receive higher ratings?🏆 Which soundtrack genres are most common in critically acclaimed films?🎬 Which directors and composers experiment most with musical diversity?
+Most film studies focus on box office or critic scores — this project examines the **musical fingerprint of movies**. 
 
-By analyzing these questions, this project will provide valuable data-driven insights for filmmakers, music supervisors, and film historians.
+Specifically:
+- Do popular or critically acclaimed movies exhibit higher soundtrack genre diversity?
+- Do genre-rich soundtracks correlate with specific eras or types of films?
+- Are certain soundtrack genres overrepresented in particular genres or decades?
 
-👥 Context and Client Use Case
+---
 
-Understanding soundtrack trends and their potential influence on film reception is valuable for:
+## ✅ Criteria for Success
 
-🎬 Filmmakers & Music Supervisors – To see how soundtrack trends impact film reception.
+- ✔️ Normalize and clean soundtrack data from MusicBrainz.
+- ✔️ Enrich each movie with TMDb metadata: genre, popularity, release year, alternative titles.
+- ✔️ Calculate genre diversity metrics per movie.
+- ✔️ Link soundtracks to movies using manual, substring, and fuzzy matching.
+- ✔️ Visualize trends in soundtrack composition across time and genres.
 
-🎼 Composers – To understand which soundtrack styles are most commonly associated with high-rated films.
+---
 
-📽️ Film Historians – To analyze changes in soundtrack composition over time.
+## 📦 Datasets
 
-This project provides insightful, data-driven trends in film music, helping industry professionals make informed decisions.
+| Dataset       | Description                                    | Usage Status         |
+|---------------|------------------------------------------------|----------------------|
+| MusicBrainz    | Soundtrack release metadata                    | ✅ Cleaned and joined |
+| TMDb           | Movie genres, popularity, release years, alt-titles | ✅ Enriched via API |
+| IMDb           | Movie ratings and metadata                     | ❌ Not used (access restricted) |
+| Last.fm        | Listener-based genre and tag data              | 🔄 Deferred for future enrichment |
 
-🏆 Criteria for Success
+---
 
-✔️ Successfully ingesting, cleaning, and storing at least 1,000 movie soundtrack records.✔️ Correlating soundtrack genre diversity with IMDb/Rotten Tomatoes scores and visualizing trends.✔️ Identifying at least 3-5 major trends in soundtrack composition over time.✔️ Building an interactive dashboard showcasing findings.
+## 🧱 Architecture
 
-📚 Datasets
+The end-to-end pipeline includes:
 
-🎵 MusicBrainz – Provides structured metadata on songs, artists, and genres.
+- 🧼 Cleanse `.tsv` dumps from MusicBrainz (`02_mb_cleanse_tsv_files.py`)
+- 🔗 Join and filter soundtrack releases (`04_mb_full_join.py`, `05_mb_filter_soundtracks.py`)
+- 🌐 Fetch top TMDb titles and metadata (`06` → `08`)
+- 🧠 Normalize genres, compute diversity (`09`, `10`)
+- 🧮 Store results in PostgreSQL for analysis
 
-🎥 TMDb & IMDb – Offers metadata, including movie ratings and user reviews.
+---
 
-🔖 Last.fm – User-generated tags for refining genre classifications.
+## 🛠 Technologies
 
-| **Dataset**                 | **Size & Coverage**                                             | **Storage Requirements**                  |
-|-----------------------------|----------------------------------------------------------------|------------------------------------------|
-| **MusicBrainz**             | 2.5M artists, 4.6M releases, 34.7M recordings                  | ~60GB for full database setup           |
-| **The Movie Database (TMDb)** | 569K+ movies                                                 | ~3.5GB for full dataset                 |
-| **IMDb**                    | Larger than TMDb (exact size undisclosed)                      | Significantly larger than TMDb          |
-| **Last.fm**                 | 1.38M artists, 3.3M releases, 26.5M tracks                     | No official full dataset, available via API |
+- 🐘 **PostgreSQL** for data modeling and joins
+- 🐍 **Python** (pandas, requests, rapidfuzz, psycopg2)
+- 📊 **Power BI** (proposed) for final visualizations
+- 📓 **Jupyter** for data profiling, EDA, and documentation
+- 📎 **Git + GitHub** for versioning and collaboration
 
+---
 
-🔗 Proposed Architecture
+## 📌 Status
 
-Extract – Query MusicBrainz, TMDb, IMDb, and Last.fm APIs to collect movie metadata, soundtrack data, and genre tags.
+- ✅ Step 1–3: Complete (data audit, schema plan, initial joins)
+- ✅ Step 4: Complete (homogeneity checks, enrichment, fuzzy match)
+- 🔜 Step 5: Ready for modeling, insights, and visualization
 
-Transform – Clean and normalize genre labels across datasets, deduplicate records, resolve inconsistencies in movie titles.
-
-Load – Store structured data in Azure SQL Server, scaling to Apache Spark in Phase 2 for large-scale processing.
-
-Analyze – Query datasets to compare genre diversity with movie ratings.
-
-Visualize – Use Power BI or Tableau to display trends.
-
-🛠️ Technologies Used
-
-🚀 Programming & Data Processing – Python, SQL💾 Data Storage – Azure SQL Server (primary), Apache Spark (scalable processing in Phase 2)☁️ Cloud Platform – Azure🔄 Version Control – Git & GitHub📦 ETL & Pipeline Management – Python-based ETL, Dockerized pipeline for deployment📊 Visualization – Power BI, Tableau, Matplotlib, Seaborn
-
-📦 Deliverables
-
-📂 GitHub Repository containing:✅ Python scripts & Jupyter Notebooks for ETL processing.✅ Azure SQL schema & queries.✅ Power BI/Tableau Dashboards visualizing trends.✅ README file documenting findings.✅ Final Slide Deck summarizing insights.
