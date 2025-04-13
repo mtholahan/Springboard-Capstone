@@ -1,5 +1,5 @@
 """
-tmdb_04_enrich_afi.py
+08_thdb_enrich_afi.py
 
 Enriches AFI Top 100 movie titles with metadata from The Movie Database (TMDb).
 
@@ -103,10 +103,12 @@ for i, row in movies.iterrows():
             "tmdb_title": best_result.get("title") or best_result.get("name"),
             "tmdb_year": best_result.get("release_date") or best_result.get("first_air_date"),
             "media_type": media_type,
+            "tmdb_id": best_result.get("id"),
             "popularity": best_result.get("popularity"),
             "fuzzy_score": best_raw_score,
             "genres": ", ".join(genre_names) if genre_names else "Unknown"
         })
+
         print(f"   ✅ Match: {best_result.get('title') or best_result.get('name')} ({best_raw_score}%)")
     else:
         results.append({

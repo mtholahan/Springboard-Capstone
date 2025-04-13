@@ -1,5 +1,5 @@
 """
-mb_02_full_join.py
+04_mb_full_join.py
 
 Joins key MusicBrainz datasets:
 - release_group: MusicBrainz release metadata (ID, name, type, etc.)

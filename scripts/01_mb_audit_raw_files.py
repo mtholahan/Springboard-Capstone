@@ -1,5 +1,5 @@
 """
-mb_01_audit_files.py
+01_mb_audit_raw_files.py
 
 Audits all `.tsv` files in the MusicBrainz dump folder.
 
