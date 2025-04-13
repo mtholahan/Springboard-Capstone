@@ -1,0 +1,39 @@
+# Ignore OS system files
+.DS_Store
+Thumbs.db
+
+# Ignore Python bytecode
+__pycache__/
+*.py[cod]
+*.so
+
+# Ignore Jupyter checkpoint folders
+.ipynb_checkpoints/
+**/.ipynb_checkpoints/
+**/.virtual_documents/
+
+# Ignore VS Code settings
+.vscode/
+
+# Ignore temp or backup files
+*.bak
+*.tmp
+*~
+
+# Ignore CSVs or raw exports in results/ or data/raw/
+results/*.csv
+data/raw/
+data/*.zip
+data/*.tar.gz
+data/*.csv
+
+# Ignore notebooks output artifacts (if applicable)
+notebooks/*_output.ipynb
+
+# Ignore slide auto-saves
+slides/*.tmp
+
+# Ignore secrets (if you ever add them)
+.env
+*.env
+credentials.json
