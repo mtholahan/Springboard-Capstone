@@ -1,0 +1,7 @@
+# setup_env.ps1.template
+# Template script to set environment variables for your Capstone project
+
+# Replace this value with your actual API key before running
+$env:TMDB_API_KEY = "your_actual_tmdb_api_key_here"
+
+Write-Host "✅ TMDb API key set for current session."

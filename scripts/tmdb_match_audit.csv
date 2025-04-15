@@ -1,0 +1,160 @@
+mb_title,tmdb_title,score,reasons,final_decision
+La Bostella,La bostella,110.0,"['fuzzy:100.0', 'substring']",strong
+Highway Lost,Lost Highway,105.0,"['fuzzy:38.095238095238095', 'genre_bonus']",strong
+Hamilton: Original Motion Picture Soundtrack,Hamilton,115.0,"['fuzzy:34.04255319148937', 'substring', 'genre_bonus']",strong
+Almost the Same,Almost the Same Age,98.23529411764706,"['fuzzy:88.23529411764706', 'substring']",strong
+Almost Invisible,Almost Invisible,110.0,"['fuzzy:100.0', 'substring']",strong
+The Lost,The Lost,115.0,"['fuzzy:64.0', 'genre_bonus']",strong
+Land of the Lost,Land of the Lost,110.0,"['fuzzy:100.0', 'substring']",strong
+Ghosts,Ghosts,115.0,"['fuzzy:100.0', 'substring']",strong
+Nostalgia,Nostalgia,115.0,"['fuzzy:100.0', 'substring', 'genre_bonus']",strong
+Lost Paradise,Lost Paradise,115.0,"['fuzzy:83.87096774193549', 'substring', 'genre_bonus']",strong
+Almost In,Almost In Life,88.26086956521739,['fuzzy:47.05882352941176'],loose
+The Soundtrack To Life,"The Ex-idol, Stuck in Life, Decided to Live with a Complete Stranger",32.84810126582279,"['fuzzy:27.848101265822788', 'genre_bonus']",loose
+Little Girl Lost,You're Lost Little Girl,87.05128205128204,"['fuzzy:82.05128205128204', 'genre_bonus']",loose
+While She Was Out (Original Motion Picture Soundtrack),While She Was Out,115.0,"['fuzzy:100.0', 'substring', 'genre_bonus']",strong
+Arcadia Lost,Arcadia Lost,115.0,"['fuzzy:100.0', 'substring', 'genre_bonus']",strong
+Ghosts,Ghosts,115.0,"['fuzzy:100.0', 'substring']",strong
+Ghost Town,Ghost Town,115.0,"['fuzzy:100.0', 'substring']",strong
+Lost Highway,Lost Highway,115.0,"['fuzzy:52.17391304347826', 'substring', 'genre_bonus']",strong
+something lost.,Is There Something Else I’ve Lost?,58.33333333333333,['fuzzy:25.0'],loose
+Almost the Same,Almost the Same Age,98.23529411764706,"['fuzzy:88.23529411764706', 'substring']",strong
+Lost Dreams (The New Orleans Vocal Groups),Lost dreams,115.0,['fuzzy:43.99999999999999'],strong
+Bull Durham: Original Motion Picture Soundtrack,Bull Durham,110.0,"['fuzzy:100.0', 'substring']",strong
+Lost Harmony,Lost Harmony,110.0,"['fuzzy:58.53658536585367', 'genre_bonus']",strong
+Bad Moon: Original Motion Picture Soundtrack,Bad Moon,115.0,"['fuzzy:100.0', 'substring']",strong
+Lost and Found,Lost and Found,115.0,"['fuzzy:100.0', 'substring']",strong
+The Most Beautiful,The Most Beautiful,115.0,"['fuzzy:66.66666666666667', 'substring', 'genre_bonus']",strong
+Lost and Found,Lost and Found,115.0,"['fuzzy:100.0', 'substring']",strong
+The Ghost of Time,The Time of Their Lives,65.0,['fuzzy:65.0'],loose
+Thinner: Original Motion Picture Soundtrack,Thinner,110.0,"['fuzzy:100.0', 'substring']",strong
+Litost,Litost,110.0,"['fuzzy:21.052631578947366', 'genre_bonus']",strong
+Photos of Ghosts,Ghost Photos,85.71428571428572,['fuzzy:42.25352112676056'],loose
+Postcards From the Edge,Postcards from the Edge,115.0,"['fuzzy:100.0', 'substring', 'genre_bonus']",strong
+Lost Properties,Heaven's Lost Property the Movie: The Angeloid of Clockwork,35.13513513513513,['fuzzy:34.210526315789465'],loose
+Almost There,Almost There,110.0,"['fuzzy:100.0', 'substring']",strong
+Things We Lost in the Fire,Things We Lost in the Fire,115.0,"['fuzzy:100.0', 'substring', 'genre_bonus']",strong
+Ghost of a Dog,The Dogsitter (Now That I’m a Ghost),53.0,"['fuzzy:22.413793103448278', 'overview_penalty']",loose
+Lost Tracks,Lost Tracks,110.0,"['fuzzy:100.0', 'substring']",strong
+Black Mesa: Soundtrack,Outcasts of Black Mesa,72.5,"['fuzzy:32.786885245901644', 'substring']",loose
+Ghosts,Ghosts,115.0,"['fuzzy:100.0', 'substring']",strong
+Angel of death (Ghosts),Angel of Death,115.0,"['fuzzy:100.0', 'substring', 'genre_bonus', 'overview_penalty']",strong
+Almost Famous,Almost Famous,115.0,"['fuzzy:61.904761904761905', 'substring']",strong
+Almost Heaven,Almost Heaven,115.0,"['fuzzy:100.0', 'substring']",strong
+Woman Thou Art Loosed: On the 7th Day (Original Motion Picture Soundtrack),Woman Thou Art Loosed: On the 7th Day,103.63013698630137,"['fuzzy:98.63013698630137', 'genre_bonus']",strong
+사랑의 온도 OST Part.1,Bargain part.1,57.63157894736843,['fuzzy:17.24137931034483'],loose
+Chasing Ghosts,Chasing Ghosts,115.0,"['fuzzy:100.0', 'substring', 'genre_bonus']",strong
+Rooste,The Rooster,80.58823529411764,"['fuzzy:40.0', 'substring', 'genre_bonus']",loose
+Ghost of a Chance,Ghost of a Chance,115.0,"['fuzzy:94.44444444444444', 'substring', 'genre_bonus']",strong
+Almost There,Almost There,110.0,"['fuzzy:100.0', 'substring']",strong
+Un posto per me,Room for One More,43.75,['fuzzy:43.75'],loose
+The Endless: Original Motion Picture Soundtrack,The Endless,110.0,"['fuzzy:53.65853658536586', 'substring', 'overview_penalty']",strong
+I AM (A‐Fest 2015 Costa Rica mix),I Am Zlatan,68.33333333333334,"['fuzzy:53.333333333333336', 'substring', 'genre_bonus']",loose
+Ghost,Ghost,115.0,"['fuzzy:100.0', 'substring', 'genre_bonus']",strong
+Lost in Love,Lost in Love,115.0,"['fuzzy:100.0', 'substring', 'genre_bonus']",strong
+Ghosts of the Past,Ghosts of the Past,115.0,"['fuzzy:69.23076923076923', 'substring']",strong
+Lost Our Way,We Haven't Lost Our Way,83.57142857142857,"['fuzzy:68.57142857142857', 'substring', 'genre_bonus']",loose
+Cereal Killer Soundtrack,Green Jellö: Cereal Killer,76.66666666666667,"['fuzzy:66.66666666666667', 'substring']",loose
+The Condor OST,The Condor,115.0,"['fuzzy:33.89830508474576', 'substring', 'genre_bonus']",strong
+Lost and Found,Lost and Found,115.0,"['fuzzy:100.0', 'substring']",strong
+Aliens Incursion: Original Soundtrack,Alien Incursion,96.7741935483871,['fuzzy:96.7741935483871'],strong
+Max Payne (Re-Engineered Soundtrack),Max Payne,110.0,"['fuzzy:44.44444444444444', 'genre_bonus']",strong
+Prostitute,Prostitute,115.0,"['fuzzy:68.96551724137932', 'substring', 'genre_bonus']",strong
+Ghosted Demo,Sex Demons: Ghosts Obsessed With Sex,55.0,['fuzzy:21.62162162162162'],loose
+Frost,Frost,115.0,"['fuzzy:100.0', 'substring']",strong
+Chasing the Ghost,Chasing the Ghost,110.0,"['fuzzy:64.15094339622642', 'substring', 'genre_bonus']",strong
+Lost Angel,Lost Angel,115.0,"['fuzzy:100.0', 'substring', 'genre_bonus']",strong
+A Most Violent Year,A Most Violent Year,115.0,"['fuzzy:100.0', 'substring', 'genre_bonus']",strong
+Ghosts,Ghosts,115.0,"['fuzzy:100.0', 'substring']",strong
+America's Most Haunted,America's Most Haunted,97.67441860465115,['fuzzy:87.5'],strong
+The Canterville Ghost,The Canterville Ghost,110.0,"['fuzzy:100.0', 'substring']",strong
+Diagnostic,Diagnóstico esperanza,63.06451612903225,"['fuzzy:58.06451612903225', 'genre_bonus']",loose
+The Lost Valley,The Valley of the Lost Soul,71.42857142857143,['fuzzy:71.42857142857143'],loose
+David Foster,Hit Man: David Foster & Friends,70.81395348837209,"['fuzzy:43.63636363636364', 'substring']",loose
+Backstage Passport Soundtrack,NOFX Backstage Passport 2,93.72093023255813,"['fuzzy:83.72093023255813', 'substring']",strong
+Attitude (soundtrack from and inspired by the Netflix film “Bruised”),Attitude,115.0,"['fuzzy:76.19047619047619', 'substring']",strong
+Ghost Dance,Ghost Dance,115.0,"['fuzzy:100.0', 'substring']",strong
+Bleed OST,Bleed,110.0,"['fuzzy:100.0', 'substring']",strong
+Almost There,Almost There,110.0,"['fuzzy:100.0', 'substring']",strong
+Acosta,Carlos Acosta: Spartacus,55.0,"['fuzzy:40.0', 'substring', 'genre_bonus']",loose
+Soundtrack for a Generation,My Shakespeare: Romeo & Juliet for a New Generation,47.76119402985075,['fuzzy:47.76119402985075'],loose
+Lost Property,Heaven's Lost Property the Movie: The Angeloid of Clockwork,46.111111111111114,"['fuzzy:35.13513513513513', 'substring']",loose
+ghost,Ghost,115.0,"['fuzzy:100.0', 'substring', 'genre_bonus']",strong
+Ghosts,Ghosts,115.0,"['fuzzy:100.0', 'substring']",strong
+Kino OST EP,Epic Movie,47.05882352941176,['fuzzy:47.05882352941176'],loose
+Lost Souls,Lost Souls,115.0,"['fuzzy:94.73684210526316', 'genre_bonus']",strong
+Almost Famous,Almost Famous,115.0,"['fuzzy:61.904761904761905', 'substring']",strong
+Lost & Found (Rarities 1996-2001),"Lost, Found",100.23809523809523,"['fuzzy:95.23809523809523', 'genre_bonus']",strong
+Lost Horizons,Lost Horizon,101.0,"['fuzzy:96.0', 'genre_bonus']",strong
+ゆるゆりのおんがく♪ YURUYURI ORIGINAL SOUNDTRACK,YuruYuri Nachuyachumi!,63.333333333333336,"['fuzzy:53.333333333333336', 'substring']",loose
+Lost and Found,Lost and Found,115.0,"['fuzzy:100.0', 'substring']",strong
+Lost It,Lost in the Night,55.0,"['fuzzy:50.0', 'genre_bonus']",loose
+Il Sole Nella Pelle (Original Motion Picture Soundtrack),Summer Affair,30.0,"['fuzzy:25.0', 'genre_bonus']",loose
+Suspeitos do Costume,The Usual Suspects,41.8421052631579,"['fuzzy:36.8421052631579', 'genre_bonus']",loose
+Lost in the Blues,Lost in Blue,87.75862068965517,"['fuzzy:41.9753086419753', 'genre_bonus']",loose
+Soundtrack to the Weekend,Long Weekend,69.23076923076923,['fuzzy:69.23076923076923'],loose
+Ghosts,Ghosts,115.0,"['fuzzy:100.0', 'substring']",strong
+Boss Level (Original Motion Picture Soundtrack),Boss Level,115.0,"['fuzzy:100.0', 'substring', 'genre_bonus']",strong
+Lost and Found,Lost and Found,115.0,"['fuzzy:100.0', 'substring']",strong
+Lost Frontier,Lost Boundaries,69.28571428571428,"['fuzzy:64.28571428571428', 'genre_bonus']",loose
+Live in Boston,The Who: Live in Boston,90.67567567567568,"['fuzzy:73.6842105263158', 'substring', 'genre_bonus']",strong
+With Frosting,Frost Giant,71.66666666666667,"['fuzzy:48.0', 'genre_bonus']",loose
+Ghost Stories,Ghost Stories,115.0,"['fuzzy:57.14285714285714', 'genre_bonus']",strong
+Nostalgia,Nostalgia,115.0,"['fuzzy:100.0', 'substring', 'genre_bonus']",strong
+Lost and Found,Lost and Found,115.0,"['fuzzy:100.0', 'substring']",strong
+Almost Human,Almost Human,115.0,"['fuzzy:100.0', 'substring', 'genre_bonus']",strong
+Surf (Original Motion Picture Soundtrack),Surf's Up,71.53846153846155,"['fuzzy:61.53846153846154', 'substring']",loose
+Freak City Soundtrack,Freak City,110.0,"['fuzzy:100.0', 'substring']",strong
+Lost in the Stars,Lost in the Stars,115.0,"['fuzzy:100.0', 'substring', 'genre_bonus']",strong
+Lost Heroes,Little Heroes Lost in China,62.89473684210527,"['fuzzy:46.808510638297875', 'genre_bonus']",loose
+Class Action: Original Motion Picture Soundtrack,Class Action,115.0,"['fuzzy:31.999999999999996', 'genre_bonus']",strong
+Lucid (Soundtrack),Lucid,115.0,"['fuzzy:100.0', 'substring', 'genre_bonus']",strong
+Paradise Lost,Paradise Lost,115.0,"['fuzzy:74.28571428571429', 'substring']",strong
+Lost Together,Lost Together,110.0,"['fuzzy:54.16666666666667', 'substring', 'genre_bonus']",strong
+GHOST,Ghost,115.0,"['fuzzy:100.0', 'substring', 'genre_bonus']",strong
+Ghost,Ghost,115.0,"['fuzzy:100.0', 'substring', 'genre_bonus']",strong
+Ghost Car,Ghost Car,115.0,"['fuzzy:100.0', 'substring', 'genre_bonus']",strong
+Island of Ghosts,Ghost Island,85.71428571428572,['fuzzy:85.71428571428572'],loose
+Almost Here,Almost Heroes,91.66666666666666,['fuzzy:91.66666666666666'],strong
+Lost,Lost,115.0,"['fuzzy:100.0', 'substring']",strong
+Lost and Found,Lost and Found,115.0,"['fuzzy:100.0', 'substring']",strong
+Paradise Lost,Paradise Lost,115.0,"['fuzzy:74.28571428571429', 'substring']",strong
+The Words (Original Motion Picture Soundtrack),The Words,115.0,"['fuzzy:100.0', 'substring', 'genre_bonus']",strong
+The 14's Soundtrack,Happy 140,55.0,['fuzzy:34.48275862068966'],loose
+Lost Time,Lost Time,110.0,"['fuzzy:100.0', 'substring']",strong
+Lost Classics,Forbidden Cinema: Volume 5 - Lost Blue Classics,43.333333333333336,['fuzzy:40.0'],loose
+Lost Songs,Obscene Songs of Lost People,57.63157894736843,['fuzzy:48.78048780487805'],loose
+Ghost Riders,Ghost Riders,110.0,['fuzzy:81.4814814814815'],strong
+Lost,Lost,115.0,"['fuzzy:100.0', 'substring']",strong
+Lost Eden,Eden of the East Movie II: Paradise Lost,36.73469387755102,['fuzzy:36.73469387755102'],loose
+Ghosts,Ghosts,115.0,"['fuzzy:100.0', 'substring']",strong
+Lost Cause,The Keeper of Lost Causes,67.14285714285714,"['fuzzy:57.14285714285714', 'substring']",loose
+The Sapphires: Original Motion Picture Soundtrack,The Sapphires,115.0,"['fuzzy:76.19047619047619', 'genre_bonus']",strong
+The Founder: Original Motion Picture Soundtrack,The Founder,115.0,"['fuzzy:100.0', 'substring']",strong
+Troll 2 Original Soundtrack,Troll 2,110.0,['fuzzy:53.333333333333336'],strong
+Host,Host,110.0,"['fuzzy:100.0', 'substring']",strong
+Hostile Environment,Hostile Environment,115.0,"['fuzzy:80.85106382978724', 'substring']",strong
+Night of the Demons (original Motion Picture Soundtrack),Night of the Demons,115.0,['fuzzy:84.44444444444444'],strong
+Rocktober Blood (Original Motion Picture Soundtrack),Rocktober Blood,115.0,"['fuzzy:100.0', 'substring', 'genre_bonus']",strong
+Lost Isles,Lost Islands,86.81818181818181,['fuzzy:53.333333333333336'],loose
+Guest Host,Host & Guest,95.9090909090909,"['fuzzy:25.64102564102564', 'genre_bonus']",strong
+The Lost Valley,The Valley of the Lost Soul,71.42857142857143,['fuzzy:71.42857142857143'],loose
+Lost Time,Lost Time,110.0,"['fuzzy:100.0', 'substring']",strong
+Oost West Thuis Best,The Strawberry Shortcake Movie: Sky's the Limit,32.83582089552238,['fuzzy:32.83582089552238'],loose
+Lost Cause,The Keeper of Lost Causes,67.14285714285714,"['fuzzy:57.14285714285714', 'substring']",loose
+Ghost Story,Ghost Story,115.0,"['fuzzy:100.0', 'substring']",strong
+50: The Soundtrack,50 km/h,61.53846153846154,"['fuzzy:36.36363636363637', 'genre_bonus']",loose
+Most,Most,115.0,['fuzzy:14.28571428571429'],strong
+Lost in America,Lost in America,110.0,"['fuzzy:100.0', 'substring']",strong
+Abbott & Costello: Who's on First,The Abbott and Costello Show: Who's On First?,78.37837837837837,['fuzzy:78.37837837837837'],loose
+Humanity (Original Soundtrack),Humanity,115.0,"['fuzzy:28.07017543859649', 'substring', 'genre_bonus']",strong
+Alberto Y Lost Trios Paranoias,Alberto Y Lost Trios Paranoias - Live At Rockpalast,84.07407407407408,"['fuzzy:74.07407407407408', 'substring']",loose
+Lost in Music,Hot in Cuba: Lost in Music,81.66666666666667,"['fuzzy:11.764705882352944', 'genre_bonus']",loose
+신사의 품격 OST Part 5,Police Precinct Part 5,52.85714285714286,"['fuzzy:44.44444444444444', 'genre_bonus']",loose
+Blue for the Most,The Most Fearful Stories by Junji Inagawa: Blue Room,41.37681159420289,"['fuzzy:46.37681159420289', 'overview_penalty']",loose
+나인 OST Part 3,10/31 Part 3,76.66666666666667,['fuzzy:63.1578947368421'],loose
+Ghost Stories,Ghost Stories,115.0,"['fuzzy:57.14285714285714', 'genre_bonus']",strong
+Mondo Candido (Original Motion Picture Soundtrack),Mondo Candido,110.0,"['fuzzy:100.0', 'substring']",strong
+Frostbite,Frostbite,110.0,"['fuzzy:94.73684210526316', 'substring']",strong
+Lost in the Translation,Lost on Location: Behind the Scenes of 'Lost in Translation',55.42168674698795,['fuzzy:55.42168674698795'],loose
+Lost in the Feeling,Lost Feelings,80.0,"['fuzzy:41.17647058823529', 'genre_bonus']",loose

@@ -1,81 +1,71 @@
 """
 04_mb_full_join.py
 
-Joins key MusicBrainz datasets:
-- release_group: MusicBrainz release metadata (ID, name, type, etc.)
-- artist_credit_name: Maps release_group to artist name
-- release_group_secondary_type: Captures labels like 'Soundtrack'
-
-Performs:
-- Tab-separated file loads with robust parsing (handles extra columns)
-- Inner joins across IDs
-- Output dataset with release title, artist, and secondary type
-- Exports full TSV and filtered Parquet
-
-Output:
-- D:/Temp/mbdump/release_group_joined.tsv (full join)
-- D:/Temp/mbdump/soundtracks.parquet (only soundtrack rows)
-
-Used by:
-- mb_03_filter_soundtracks.py
-- match_05_fuzzy_afi_mb.py
+Joins core MusicBrainz tables: release_group, secondary_type, join mappings.
+Preserves intermediate outputs and sanity checks. Config-based paths.
 """
 
 import pandas as pd
 from pathlib import Path
-import psutil
-from datetime import datetime
+from config import MB_FILES
 
-# === CONFIG ===
-DATA_DIR = Path("D:/Temp/mbdump")
-OUTPUT_TSV = DATA_DIR / "release_group_joined.tsv"
-OUTPUT_PARQUET = DATA_DIR / "soundtracks.parquet"
+# === Config ===
+RAW_DIR = Path("D:/Capstone_Staging/data/musicbrainz_raw")
+OUTPUT_DIR = RAW_DIR
 
-# === RAM MONITOR ===
-def log_ram():
-    used = psutil.Process().memory_info().rss / 1024**2
-    print(f"[{datetime.now()}] 🧠 RAM used: {used:.2f} MB")
+# === Load Source Files ===
+print("📥 Loading source TSV files...")
+release_group = pd.read_csv(
+    MB_FILES["release_group"],
+    sep="\t",
+    header=None,
+    names=["id", "gid", "name", "artist_credit", "type", "comment", "edits_pending", "last_updated"],
+    dtype=str,
+    encoding="utf-8",
+    on_bad_lines="skip"
+)
 
-# === FILE LOADER (Robust) ===
-def load_file(filename, n_cols_expected):
-    file_path = DATA_DIR / filename
-    print(f"📂 Loading {filename} — expecting ~{n_cols_expected} columns")
-    df = pd.read_csv(
-        file_path,
-        sep="\t",
-        header=None,
-        dtype=str,
-        na_values=["\\N"],
-        engine="python",
-        on_bad_lines="skip"
-    )
-    df.columns = [f"col{i}" for i in range(df.shape[1])]
-    print(f"✅ Loaded {filename}: {df.shape}")
-    log_ram()
-    return df
+rg_secondary_type = pd.read_csv(
+    MB_FILES["release_group_secondary_type"],
+    sep="\t",
+    header=None,
+    names=["id", "gid", "name", "comment", "edits_pending", "last_updated"],
+    dtype=str,
+    encoding="utf-8",
+    on_bad_lines="skip"
+)
 
-# === LOAD FILES ===
-release_group = load_file("release_group", 8)
-release_group.columns = ["id", "gid", "name", "artist_credit", "type", "comment", "edits_pending", "last_updated"]
+rg_secondary_type_join = pd.read_csv(
+    MB_FILES["release_group_secondary_type_join"],
+    sep="\t",
+    header=None,
+    names=["release_group", "secondary_type"],
+    dtype=str,
+    encoding="utf-8",
+    on_bad_lines="skip"
+)
 
-artist_credit_name = load_file("artist_credit_name", 5)
-artist_credit_name.columns = ["artist_credit", "position", "artist", "name", "join_phrase"]
+print("🔍 release_group shape:", release_group.shape)
+print("🔍 secondary_type shape:", rg_secondary_type.shape)
+print("🔍 secondary_type_join shape:", rg_secondary_type_join.shape)
+print("🧪 Columns in secondary_type_join:", rg_secondary_type_join.columns.tolist())
+print("🧪 Columns in rg_secondary_type:", rg_secondary_type.columns.tolist())
 
-secondary_type = load_file("release_group_secondary_type", 2)
-secondary_type = secondary_type.iloc[:, :2]  # only use first 2 columns
-secondary_type.columns = ["release_group", "secondary_type"]
+# === Intermediate Outputs ===
+release_group.to_csv(OUTPUT_DIR / "release_group_clean.tsv", sep="\t", index=False, encoding="utf-8")
+rg_secondary_type.to_csv(OUTPUT_DIR / "release_group_secondary_type_clean.tsv", sep="\t", index=False, encoding="utf-8")
+rg_secondary_type_join.to_csv(OUTPUT_DIR / "release_group_secondary_type_join_clean.tsv", sep="\t", index=False, encoding="utf-8")
 
-# === JOIN LOGIC ===
-df = release_group.merge(artist_credit_name, on="artist_credit", how="inner")
-df = df.merge(secondary_type, left_on="id", right_on="release_group", how="left")
+# === Merge ===
+print("🔗 Joining release_group → secondary_type_join...")
+df = release_group.merge(rg_secondary_type_join, how="left", left_on="id", right_on="release_group")
+print("→ After join #1:", df.shape)
 
-print(f"🔗 After join: {df.shape}")
+print("🔗 Joining with secondary_type...")
+df = df.merge(rg_secondary_type, how="left", left_on="secondary_type", right_on="id")
+print("→ After join #2:", df.shape)
 
-# === EXPORT FULL TSV ===
-df.to_csv(OUTPUT_TSV, sep="\t", index=False)
-print(f"✅ Exported full join to: {OUTPUT_TSV}")
-
-# === EXPORT SOUNDTRACKS PARQUET ===
-soundtracks = df[df["secondary_type"].str.lower() == "soundtrack"]
-soundtracks.to_parquet(OUTPUT_PARQUET, index=False)
-print(f"✅ Exported soundtrack subset to: {OUTPUT_PARQUET}")
+# === Final Output ===
+output_path = OUTPUT_DIR / "release_group_joined.tsv"
+df.to_csv(output_path, sep="\t", index=False, encoding="utf-8")
+print(f"✅ Final joined file written to: {output_path} ({df.shape[0]:,} rows)")

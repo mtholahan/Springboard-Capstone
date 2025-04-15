@@ -1,61 +1,36 @@
 """
 02_mb_cleanse_tsv_files.py
 
-Cleans raw MusicBrainz TSV files for safe ingestion.
-
-- Applies uniform UTF-8 encoding
-- Replaces NULL values with "\\N"
-- Strips blank strings and malformed lines
-- Retains original column structure without headers
-
-Processes these files:
-- artist
-- artist_credit
-- artist_credit_name
-- release
-- release_group
-- release_group_secondary_type_join
-- release_group_secondary_type
-
-Output:
-- Cleaned versions of each file as `<name>_final.tsv` in the same directory
+Reads MusicBrainz TSV files, ensures consistent UTF-8 encoding,
+and writes out clean versions into a cleansed subfolder.
+Only cleanses whitelisted files.
 """
 
-import pandas as pd
+import os
 from pathlib import Path
+from config import MB_FILES
 
-# List of TSV files to clean
-files = [
-    "artist",
-    "artist_credit",
-    "artist_credit_name",
-    "release",
-    "release_group",
-    "release_group_secondary_type_join",
-    "release_group_secondary_type"
-]
+# === Config ===
+RAW_DIR = Path("D:/Capstone_Staging/data/musicbrainz_raw")
+CLEAN_DIR = RAW_DIR / "cleansed"
+CLEAN_DIR.mkdir(parents=True, exist_ok=True)
 
-input_dir = Path("D:/Temp/mbdump")
-output_dir = input_dir  # or use a different path if you prefer
+# === Main ===
+def cleanse_file(src_path: Path, dest_path: Path):
+    line_count = 0
+    with open(src_path, "r", encoding="utf-8", errors="replace") as src_file, \
+         open(dest_path, "w", encoding="utf-8", newline="\n") as dest_file:
+        for line in src_file:
+            dest_file.write(line)
+            line_count += 1
+    return line_count
 
-for name in files:
-    input_path = input_dir / name
-    output_path = output_dir / f"{name}_final.tsv"
+if __name__ == "__main__":
+    print("🧼 Starting TSV cleansing...")
+    for name, src_file in MB_FILES.items():
+        dest_file = CLEAN_DIR / src_file.name
+        print(f"→ Cleansing: {src_file.name}")
+        lines = cleanse_file(src_file, dest_file)
+        print(f"   Saved: {dest_file.name} ({lines:,} lines)")
 
-    try:
-        print(f"🧹 Cleaning {name}...")
-        df = pd.read_csv(
-            input_path,
-            sep="\t",
-            header=None,
-            dtype=str,
-            na_values=["\\N", ""],
-            quoting=3,
-            engine="python",
-            on_bad_lines='warn'
-        )
-        df = df.fillna("\\N")
-        df.to_csv(output_path, sep="\t", index=False, header=False, encoding="utf-8")
-        print(f"✅ Saved cleaned file: {output_path.name}")
-    except Exception as e:
-        print(f"❌ Failed to clean {name}: {e}")
+    print(f"✅ All files cleansed and saved to: {CLEAN_DIR}")

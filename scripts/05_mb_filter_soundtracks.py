@@ -1,48 +1,34 @@
 """
 05_mb_filter_soundtracks.py
 
-Filters the full MusicBrainz joined dataset to extract likely soundtrack-related entries.
-
-- Loads release_group_joined.tsv from previous join step
-- Applies broad filters on 'secondary_type' and name content
-- Exports result to soundtracks.parquet for matching & analysis
-- Includes sanity checks on record count
-
-Output:
-- D:/Temp/mbdump/soundtracks.parquet
-
-Used in:
-- match_05_fuzzy_afi_mb.py (fuzzy match to TMDb titles)
+Filters release_group_joined.tsv for entries that are likely to be
+soundtracks or scores. Saves the filtered results as a separate TSV.
 """
 
 import pandas as pd
 from pathlib import Path
-import sys
+from config import MB_FILES
 
-INPUT_FILE = "D:/Temp/mbdump/release_group_joined.tsv"
-OUTPUT_FILE = "D:/Temp/mbdump/soundtracks.parquet"
+# === Config ===
+RAW_DIR = Path("D:/Capstone_Staging/data/musicbrainz_raw")
+JOINED_FILE = RAW_DIR / "release_group_joined.tsv"
+OUTPUT_FILE = RAW_DIR / "release_group_soundtracks.tsv"
 
-# === LOAD FULL JOIN ===
-df = pd.read_csv(INPUT_FILE, sep="\t", dtype=str)
-print(f"📂 Loaded joined dataset: {df.shape[0]:,} rows")
+# === Load Joined Data ===
+print("🎼 Loading full release_group_joined.tsv...")
+df = pd.read_csv(JOINED_FILE, sep="\t", dtype=str, encoding="utf-8", on_bad_lines="skip")
+print("🔍 Full dataset shape:", df.shape)
+print("🧪 Columns in release_group_joined:", df.columns.tolist())
 
-# === FILTER SOUNDTRACK-LIKE ENTRIES ===
-mask = (
-    df["secondary_type"].str.contains("soundtrack|score", case=False, na=False) |
-    df["name_x"].str.contains("soundtrack|original score|motion picture|ost", case=False, na=False)
-)
-soundtracks = df[mask].copy()
-print(f"🎯 Soundtrack candidates: {soundtracks.shape[0]:,} rows")
+# === Filter Logic ===
+pattern = r"soundtrack|original motion picture|score|ost"
+filtered = df[df["name_x"].str.contains(pattern, case=False, na=False)]
+print(f"🎯 Matched entries: {len(filtered):,} rows")
 
-# === EXPORT ===
-soundtracks.to_parquet(OUTPUT_FILE, index=False)
-print(f"✅ Saved: {OUTPUT_FILE}")
+# Preview matches
+print("🔎 Sample titles:")
+print(filtered[["name_x"]].dropna().sample(n=min(10, len(filtered)), random_state=42))
 
-# === SANITY CHECK ===
-verify = pd.read_parquet(OUTPUT_FILE)
-count = verify.shape[0]
-print(f"🔎 Parquet verification: {count:,} records loaded")
-
-# === MINIMUM ROW COUNT CHECK ===
-if count < 100:
-    raise ValueError(f"🚨 Too few records in Parquet file: only {count} found. Aborting.")
+# === Output ===
+filtered.to_csv(OUTPUT_FILE, sep="\t", index=False, encoding="utf-8")
+print(f"✅ Filtered soundtracks written to: {OUTPUT_FILE}")

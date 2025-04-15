@@ -37,3 +37,5 @@ slides/*.tmp
 .env
 *.env
 credentials.json
+# Ignore personal environment setup script
+setup_env.ps1
