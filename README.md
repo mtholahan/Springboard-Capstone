@@ -1,164 +1,101 @@
-🎵 Musical Diversity in Movies – Springboard Capstone
-
-📌 Project Overview
+# 🎵 Musical Diversity in Movies – Springboard Capstone
 
 ## 📌 Project Overview
-This capstone project explores the relationship between a film’s soundtrack genre diversity and its movie-level metadata, such as popularity, release year, and genre classification.
 
-By integrating soundtrack data from MusicBrainz with enriched movie data from TMDb, the project builds a normalized dataset that enables querying, visualization, and downstream modeling.
+This Springboard capstone explores the relationship between a film’s **soundtrack genre diversity** and its **movie-level metadata** (e.g., popularity, release year, genre).  
 
-📄 [Read the full project proposal](Docs/Capstone_Proposal.md)
+By integrating soundtrack data from **MusicBrainz** with enriched movie metadata from **TMDb**, the project creates a queryable dataset for analysis and potential modeling.
 
-📂 Data Sources
+📄 [View the full project proposal](Docs/Capstone_Proposal.md)
+
+---
 
 ## 📂 Data Sources
-| Source     | Description                                 | Status             |
-|------------|---------------------------------------------|--------------------|
+
+| Source        | Description                                   | Status            |
+|---------------|-----------------------------------------------|-------------------|
 | **MusicBrainz** | Soundtrack metadata (title, artist, release) | ✅ Cleaned & loaded |
-| **TMDb**        | Movie metadata (title, popularity, genres)   | 📘 API enrichment   |
+| **TMDb**        | Movie metadata (title, popularity, genres)   | 🔄 API enrichment   |
 | **IMDb**        | Movie scores and critic ratings              | ❌ Not used         |
-| **Last.fm**     | Listener-based genre tags                    | 🧊 Deferred         |
+| **Last.fm**     | Listener-based genre tags                    | ⏸️ Deferred         |
+
+---
+
+## 🧱 Architecture Overview
+
+The project uses a modular, script-driven pipeline with PostgreSQL and Jupyter notebooks for exploratory analysis.
+
+```text
+Raw TSVs → PostgreSQL → Soundtrack Filtering → TMDb Enrichment
+         → Fuzzy Matching → Final Schema
+```
+
+- Python scripts `02–10` perform ingestion, enrichment, matching, and export
+- PostgreSQL stores cleaned and enriched datasets
+- TMDb API provides genre/popularity/metadata enrichment
+- Final schema includes genre-normalized join tables for easy SQL queries
 
 ---
 
 ## 🗂 Repository Structure
-| Folder       | Description                                        |
-|--------------|----------------------------------------------------|
-| `Docs/`      | Proposal and architecture notes                    |
-| `notebooks/` | Data exploration, enrichment, and summary work     |
-| `scripts/`   | ETL and enrichment pipeline scripts (02–10)        |
-| `results/`   | (Optional) Final exports or joins                  |
-| `slides/`    | Slide decks for review and final submission        |
-| `data/`      | Raw `.tsv` and `.csv` files (excluded from repo)   |
+
+| Folder       | Description                                          |
+|--------------|------------------------------------------------------|
+| `Docs/`      | Proposal and architecture notes                      |
+| `notebooks/` | EDA, enrichment validation, and visual analysis      |
+| `scripts/`   | ETL and enrichment pipeline (parameterized Python)   |
+| `results/`   | Final exports or resolved xrefs (optional)           |
+| `slides/`    | Slide decks for mentor review and final submission   |
+| `data/`      | Local TSV + CSV source files (excluded from Git)     |
 
 ---
 
-Soundtrack metadata (title, artist, release)
-
-✅ Cleaned & loaded
-
-TMDb
-
-Movie metadata (title, popularity, genres)
-
-🔄 API enrichment
-
-IMDb
-
-Movie scores and critic ratings
-
-❌ Not used
-
-Last.fm
-
-Listener-based genre tags
-
-⏸️ Deferred
-
-🗂️ Repository Structure
-
-Folder
-
-Description
-
-Docs/
-
-Proposal and architecture notes
-
-notebooks/
-
-Data exploration, enrichment, and summary work
-
-scripts/
-
-ETL and enrichment pipeline scripts (02–10)
-
-results/
-
-Final exports or joins (optional)
-
-slides/
-
-Slide decks for review and final submission
-
-data/
-
-Raw .tsv and .csv files (excluded from repo)
-
-🧱 Architecture Overview
-
-This project uses a modular, script-driven pipeline supported by Jupyter notebooks for exploratory work:
-```
-Raw TSVs → PostgreSQL → Soundtrack Filtering → TMDb Enrichment
-          → Fuzzy Matching → Final Schema
-```
-- Python scripts (02–10) handle data loading, enrichment, and matching
-- PostgreSQL serves as the central data store
-- Final schema includes genre-normalized join tables for easy querying
-
-Pipeline Overview:
-
-Raw TSVs → PostgreSQL → Soundtrack Filtering → TMDb Enrichment → Fuzzy Matching → Final Schema
-
-Python scripts handle data loading, enrichment, and matching
-
-These were deferred in favor of enriching with TMDb and creating reproducible joins.
-
-Final schema includes genre-normalized join tables for easy querying
-
-💡 Note on MusicBrainz ingestion:
-
-While the initial ingest of .tsv files is currently manual, I treated it as a simulated batch data lake. The engineering focus was on normalizing the data, resolving entity joins, and enriching it with TMDb metadata through an automated, script-driven API pipeline.
-
-Future automation could include:
-
-Programmatic TSV pull from MusicBrainz FTP
-
-Script-based loader for Postgres using schema introspection
-
-🔍 Step 4: Data Exploration & Enrichment
-
 ## ✅ Step 4: Data Exploration & Enrichment
-This step focused on verifying data quality, enriching movies via TMDb, and establishing fuzzy match pipelines to link soundtracks to their corresponding films.
 
-📁 Key Deliverables
+This step focused on:
+- Cleaning and validating key columns (homogeneity checks)
+- Building a fuzzy matching pipeline to align MusicBrainz + TMDb titles
+- Logging and auditing scores and edge cases
+- Establishing schema relationships (ERD + PostgreSQL joins)
 
-Capstone_Step_4_Analysis.ipynb — Column homogeneity checks across 10 tables
+📁 Deliverables:
+- `Capstone_Step_4_Analysis.ipynb`
+- `Step_4_wrapup.ipynb`
+- `Step_4_ERD.png`
+- `Step_4_Slide_Deck.pptx`
 
-Step_4_wrapup.ipynb — Final Q&A, ERD, and storage discussion
+✅ Outcome: A working enrichment pipeline, match audit logs, and entity-linked datasets.
 
-Step_4_ERD.png — Visual schema overview (PostgreSQL)
+---
 
-Step_4_Slide_Deck.pptx — Slide walkthrough of enrichment process
+## 🛠 Local Setup
 
-✅ Outcome
+Make sure Python and Anaconda are on your system `PATH`:
 
-### 2. Add Python to Your System Path (One-Time Setup)
-Make sure these paths are in your system `PATH` variable:
+```powershell
+C:\ProgramDatanaconda3
+C:\ProgramDatanaconda3\Scripts
 ```
-C:\ProgramData\anaconda3
-C:\ProgramData\anaconda3\Scripts
-```
-After adding them, **restart PowerShell** to apply changes.
 
-🧪 Then test:
+Then verify:
 ```powershell
 python --version
 ```
-You should see something like `Python 3.11.7`.
 
 ---
 
-⏭️ Next Steps
+## ⏭️ Next Steps
+
+- Finish TMDb enrichment for all soundtrack candidates
+- Refine fuzzy matching (threshold tuning, RESCUE_MAP, genre filters)
+- Build final reporting or analytics views
+- Wrap up Step 5 and submit for mentor review
 
 ---
 
-For questions or collaboration, feel free to reach out:
+📬 **Contact**
 
-📧 Email: markholahan@proton.me  
-🔗 LinkedIn: linkedin.com/in/mark-holahan-data-devotee
+- Email: markholahan@proton.me  
+- LinkedIn: [linkedin.com/in/mark-holahan-data-devotee](https://linkedin.com/in/mark-holahan-data-devotee)
 
-🔗 LinkedIn: linkedin.com/in/mark-holahan-data-devotee
-
-🧠 This project is part of my Springboard Data Engineering Bootcamp. Stay tuned for updates as it progresses!
-
+🧠 This project is part of my Springboard Data Engineering Bootcamp. Stay tuned for updates!
