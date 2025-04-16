@@ -6,7 +6,7 @@ This Springboard capstone explores the relationship between a film’s **soundtr
 
 By integrating soundtrack data from **MusicBrainz** with enriched movie metadata from **TMDb**, the project creates a queryable dataset for analysis and potential modeling.
 
-📄 [View the full project proposal](Docs/Capstone_Proposal.md)
+📄 [View the full project proposal](Docs/Musical_Diversity_in_Movies_Proposal.md)
 
 ---
 
