@@ -1,4 +1,6 @@
-# 🎶 Musical Diversity in Movies – Springboard Capstone
+🎵 Musical Diversity in Movies – Springboard Capstone
+
+📌 Project Overview
 
 ## 📌 Project Overview
 This capstone project explores the relationship between a film’s soundtrack genre diversity and its movie-level metadata, such as popularity, release year, and genre classification.
@@ -7,7 +9,7 @@ By integrating soundtrack data from MusicBrainz with enriched movie data from TM
 
 📄 [Read the full project proposal](Docs/Capstone_Proposal.md)
 
----
+📂 Data Sources
 
 ## 📂 Data Sources
 | Source     | Description                                 | Status             |
@@ -31,7 +33,59 @@ By integrating soundtrack data from MusicBrainz with enriched movie data from TM
 
 ---
 
-## 🧠 Architecture Overview
+Soundtrack metadata (title, artist, release)
+
+✅ Cleaned & loaded
+
+TMDb
+
+Movie metadata (title, popularity, genres)
+
+🔄 API enrichment
+
+IMDb
+
+Movie scores and critic ratings
+
+❌ Not used
+
+Last.fm
+
+Listener-based genre tags
+
+⏸️ Deferred
+
+🗂️ Repository Structure
+
+Folder
+
+Description
+
+Docs/
+
+Proposal and architecture notes
+
+notebooks/
+
+Data exploration, enrichment, and summary work
+
+scripts/
+
+ETL and enrichment pipeline scripts (02–10)
+
+results/
+
+Final exports or joins (optional)
+
+slides/
+
+Slide decks for review and final submission
+
+data/
+
+Raw .tsv and .csv files (excluded from repo)
+
+🧱 Architecture Overview
 
 This project uses a modular, script-driven pipeline supported by Jupyter notebooks for exploratory work:
 ```
@@ -42,46 +96,42 @@ Raw TSVs → PostgreSQL → Soundtrack Filtering → TMDb Enrichment
 - PostgreSQL serves as the central data store
 - Final schema includes genre-normalized join tables for easy querying
 
----
+Pipeline Overview:
 
-## 💡 Note on MusicBrainz Ingestion
-MusicBrainz `.tsv` file ingestion is manual but scripted like a real-world data lake load. Future improvements might include:
-- Programmatic TSV pulls from FTP
-- Schema-based Postgres loaders
+Raw TSVs → PostgreSQL → Soundtrack Filtering → TMDb Enrichment → Fuzzy Matching → Final Schema
+
+Python scripts handle data loading, enrichment, and matching
 
 These were deferred in favor of enriching with TMDb and creating reproducible joins.
 
----
+Final schema includes genre-normalized join tables for easy querying
+
+💡 Note on MusicBrainz ingestion:
+
+While the initial ingest of .tsv files is currently manual, I treated it as a simulated batch data lake. The engineering focus was on normalizing the data, resolving entity joins, and enriching it with TMDb metadata through an automated, script-driven API pipeline.
+
+Future automation could include:
+
+Programmatic TSV pull from MusicBrainz FTP
+
+Script-based loader for Postgres using schema introspection
+
+🔍 Step 4: Data Exploration & Enrichment
 
 ## ✅ Step 4: Data Exploration & Enrichment
 This step focused on verifying data quality, enriching movies via TMDb, and establishing fuzzy match pipelines to link soundtracks to their corresponding films.
 
-Key Deliverables:
-- `Capstone_Step_4_Analysis.ipynb` — Column homogeneity checks across 10 tables
-- `Step_4_wrapup.ipynb` — Final Q&A, ERD, and storage discussion
-- `Step_4_ERD.png` — Visual schema overview (PostgreSQL)
-- `Step_4_Slide_Deck.pptx` — Slide walkthrough of enrichment process
+📁 Key Deliverables
 
----
+Capstone_Step_4_Analysis.ipynb — Column homogeneity checks across 10 tables
 
-## 🔧 Developer Setup (API Key + Python)
+Step_4_wrapup.ipynb — Final Q&A, ERD, and storage discussion
 
-### 1. Set Your API Key (PowerShell)
-```powershell
-$env:TMDB_API_KEY = "your_actual_tmdb_api_key"
-```
-This key lasts only for the current terminal session.
+Step_4_ERD.png — Visual schema overview (PostgreSQL)
 
-✅ Instead of typing it manually, run:
-```powershell
-.\setup_env.ps1
-```
-This script lives in your project root and securely sets the API key.
+Step_4_Slide_Deck.pptx — Slide walkthrough of enrichment process
 
-🧪 To verify:
-```powershell
-echo $env:TMDB_API_KEY
-```
+✅ Outcome
 
 ### 2. Add Python to Your System Path (One-Time Setup)
 Make sure these paths are in your system `PATH` variable:
@@ -99,20 +149,16 @@ You should see something like `Python 3.11.7`.
 
 ---
 
-## 🎯 Next Steps
-- Finalize genre diversity scoring strategy
-- Visualize genre diversity trends by decade
-- Model correlation between genre diversity and movie popularity
-- Deploy or publish key insights as part of final deliverable
+⏭️ Next Steps
 
 ---
 
-## 🤝 Contact
-For questions or collaboration, please reach out to Mark Holahan:
+For questions or collaboration, feel free to reach out:
 
 📧 Email: markholahan@proton.me  
 🔗 LinkedIn: linkedin.com/in/mark-holahan-data-devotee
 
----
+🔗 LinkedIn: linkedin.com/in/mark-holahan-data-devotee
 
-🧠 _This project is part of my Springboard Data Engineering Bootcamp. Stay tuned for updates as it progresses!_ 🚀
+🧠 This project is part of my Springboard Data Engineering Bootcamp. Stay tuned for updates as it progresses!
+
