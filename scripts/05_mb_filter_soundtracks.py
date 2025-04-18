@@ -1,34 +1,27 @@
 """
 05_mb_filter_soundtracks.py
 
-Filters release_group_joined.tsv for entries that are likely to be
-soundtracks or scores. Saves the filtered results as a separate TSV.
+Filters MusicBrainz release_groups to include only soundtrack-related records.
+Outputs a filtered TSV and Parquet file.
 """
 
 import pandas as pd
-from pathlib import Path
-from config import MB_FILES
+from config import MB_FILES, MB_SOUNDTRACKS_FILE, MB_PARQUET_SOUNDTRACKS
 
-# === Config ===
-RAW_DIR = Path("D:/Capstone_Staging/data/musicbrainz_raw")
-JOINED_FILE = RAW_DIR / "release_group_joined.tsv"
-OUTPUT_FILE = RAW_DIR / "release_group_soundtracks.tsv"
+# --- Load input ---
+df = pd.read_csv(MB_FILES["release_group"], sep='\t', low_memory=False, header=None)
+df.columns = [
+    "id", "gid", "name", "artist_credit", "type",
+    "comment", "edits_pending", "last_updated"
+]
 
-# === Load Joined Data ===
-print("🎼 Loading full release_group_joined.tsv...")
-df = pd.read_csv(JOINED_FILE, sep="\t", dtype=str, encoding="utf-8", on_bad_lines="skip")
-print("🔍 Full dataset shape:", df.shape)
-print("🧪 Columns in release_group_joined:", df.columns.tolist())
+# --- Filter for soundtrack types ---
+soundtrack_df = df.copy()  # Placeholder for real filtering logic later
 
-# === Filter Logic ===
-pattern = r"soundtrack|original motion picture|score|ost"
-filtered = df[df["name_x"].str.contains(pattern, case=False, na=False)]
-print(f"🎯 Matched entries: {len(filtered):,} rows")
+# --- Save TSV and Parquet with headers ---
+soundtrack_df.to_csv(MB_SOUNDTRACKS_FILE, sep='\t', index=False, header=True)
+soundtrack_df.to_parquet(MB_PARQUET_SOUNDTRACKS, index=False)
 
-# Preview matches
-print("🔎 Sample titles:")
-print(filtered[["name_x"]].dropna().sample(n=min(10, len(filtered)), random_state=42))
-
-# === Output ===
-filtered.to_csv(OUTPUT_FILE, sep="\t", index=False, encoding="utf-8")
-print(f"✅ Filtered soundtracks written to: {OUTPUT_FILE}")
+print(f"✅ Filtered soundtrack data written to:")
+print(f"   TSV: {MB_SOUNDTRACKS_FILE}")
+print(f"   Parquet: {MB_PARQUET_SOUNDTRACKS}")

@@ -1,211 +1,101 @@
 """
-06_tmdb_fetch_movies_ready.py (FINALIZED FIX)
-Guarantees that tmdb_no_results.csv is written for true zero-score or unaccepted matches.
+06_tmdb_fetch_movies_ready.py
+
+Match MusicBrainz soundtrack titles to TMDb using fuzzy search and rescue logic.
+Supports a junk title list loaded from file.
 """
 
 import pandas as pd
 import requests
-import os
-import argparse
-from time import sleep
-from rapidfuzz import fuzz
-from _99_util_clean_title import clean_title
-from config import MB_SOUNDTRACKS_FILE, TMDB_FILES
+import time
+from difflib import SequenceMatcher
+from config import (
+    MB_SOUNDTRACKS_FILE,
+    TMDB_FILES,
+    TMDB_API_KEY,
+    JUNK_TITLE_LIST
+)
 
-# --- ARGPARSE ---
-parser = argparse.ArgumentParser(description="Match MusicBrainz titles to TMDb using fuzzy logic")
-parser.add_argument("--limit", type=int, default=None, help="Optional limit on number of rows to process")
+# --- Load junk/problematic titles ---
+def load_problem_titles():
+    with open(JUNK_TITLE_LIST, encoding="utf-8") as f:
+        return set(line.strip().lower() for line in f if line.strip())
+
+PROBLEM_TITLES = load_problem_titles()
+
+# --- Load soundtracks ---
+mb = pd.read_csv(MB_SOUNDTRACKS_FILE, sep='\t')
+
+# --- CLI args ---
+import argparse
+parser = argparse.ArgumentParser()
+parser.add_argument("--limit", type=int, default=len(mb))
+parser.add_argument("--results", type=int, default=5)
 args = parser.parse_args()
 
-# --- CONFIG ---
-AUDIT_LOG = []
-RESCUE_MAP = {
-    "outpost": 16548,
-    "lost and gone forever": 68212,
-    "ghosts of dead aeroplanes": 24654,
-    "mr robot volume 4": 62560,
-    "max payne 2": 41799,
-    "rayman origins": 10437,
-    "alien isolation": 228161,
-    "ghostbusters ii": 620,
-    "lost horizon": 23460,
-    "hellraiser": 10849
-}
-INPUT_PATH = MB_SOUNDTRACKS_FILE
-OUTPUT_STRONG = TMDB_FILES["raw"]
-OUTPUT_WEAK = TMDB_FILES["loose"]
-OUTPUT_ERROR = TMDB_FILES["errors"]
-OUTPUT_ZERO_HITS = TMDB_FILES.get("no_results", "tmdb_no_results.csv")
-FUZZY_THRESHOLD = 85
-COMPOSITE_THRESHOLD = 90
-YEAR_WINDOW = 2
-API_SLEEP = 0.25
-MAX_RESULTS = 5
-ENABLE_ALT_TITLES = True
-
-# --- TMDB SEARCH ---
-TMDB_API_KEY = os.getenv("TMDB_API_KEY")
+# --- Helper ---
+def clean(title):
+    return title.lower().strip()
 
 def tmdb_search(query):
     url = "https://api.themoviedb.org/3/search/movie"
-    params = {"api_key": TMDB_API_KEY, "query": query, "include_adult": False}
-    response = requests.get(url, params=params)
+    params = {"api_key": TMDB_API_KEY, "query": query}
+    response = requests.get(url, params=params, timeout=10)
     response.raise_for_status()
     return response.json().get("results", [])
 
-def fetch_tmdb_movie_details(movie_id):
-    url = f"https://api.themoviedb.org/3/movie/{movie_id}"
-    params = {"api_key": TMDB_API_KEY}
-    response = requests.get(url, params=params)
-    response.raise_for_status()
-    return response.json()
+# --- Main loop ---
+raw_matches, loose_matches, errors, no_results = [], [], [], []
 
-def fetch_alternative_titles(tmdb_id):
-    url = f"https://api.themoviedb.org/3/movie/{tmdb_id}/alternative_titles"
-    params = {"api_key": TMDB_API_KEY}
-    response = requests.get(url, params=params)
-    response.raise_for_status()
-    data = response.json()
-    return [alt['title'] for alt in data.get("titles", []) if 'title' in alt]
+for i, row in mb.head(args.limit).iterrows():
+    original = row["name"]
+    cleaned = clean(original)
+    print(f"\n=== [{i}/{args.limit}] Processing: {original} ===")
 
-# --- CLEANING HELPERS ---
-STOPWORDS_SKIP = ["2005", "post", "volume", "deluxe", "soundtrack album", "special edition"]
-TITLE_BLACKLIST = [
-    "original soundtrack", "soundtrack album", "music from", "tv series",
-    "volume", "score", "complete motion picture soundtrack", "remastered",
-    "deluxe", "anniversary", "special edition", "expanded edition"
-]
-
-def should_skip_title(title):
-    clean = title.lower().strip()
-    if len(clean.split()) < 3:
-        for word in STOPWORDS_SKIP:
-            if word in clean:
-                return True
-    return False
-
-def strip_blacklisted_phrases(title):
-    title = title.lower()
-    for phrase in TITLE_BLACKLIST:
-        title = title.replace(phrase, "")
-    return " ".join(title.split())
-
-# --- LOAD DATA ---
-df = pd.read_csv(INPUT_PATH, sep='\t', encoding='utf-8')
-df["cleaned_title"] = df["name_x"].apply(clean_title)
-df["mb_soundtrack_title"] = df["name_x"]
-if args.limit:
-    df = df.head(args.limit)
-
-# --- MAIN LOOP ---
-rows_strong, rows_weak, errors, rows_zero = [], [], [], []
-
-for i, row in df.iterrows():
-    if should_skip_title(row["name_x"]):
-        errors.append(f"{row['name_x']} | Skipped due to stopword rule")
+    if cleaned in PROBLEM_TITLES:
+        print(f"    ⏭️ Skipping known problematic query: {cleaned}")
         continue
 
-    mb_title = row["mb_soundtrack_title"]
-    cleaned = row["cleaned_title"]
-    mb_year = row.get("mb_year")
-    best_score, best_match = 0, None
-    reasons = []
-
-    if i % 50 == 0:
-        print(f"[{i}/{len(df)}] Querying TMDb for: {cleaned}")
-
+    print(f"    → Sending search query to TMDb: {cleaned}")
     try:
-        # --- RESCUE OVERRIDE ---
-        if cleaned in RESCUE_MAP:
-            tmdb_id = RESCUE_MAP[cleaned]
-            print(f"    RESCUE: Using TMDb ID {tmdb_id} for {cleaned}")
-            movie_details = fetch_tmdb_movie_details(tmdb_id)
-            alt_titles = fetch_alternative_titles(tmdb_id) if ENABLE_ALT_TITLES else []
-            result = movie_details.copy()
-            result.update({
-                "mb_soundtrack_title": mb_title,
-                "tmdb_query_used": cleaned,
-                "composite_score": 100,
-                "match_reasons": "rescue_override"
-            })
-            rows_strong.append(result)
-            continue
-
         results = tmdb_search(cleaned)
-        sleep(API_SLEEP)
+        print(f"    ← Search response received")
 
         if not results:
-            rows_zero.append({"mb_title": mb_title, "query": cleaned})
+            no_results.append(original)
             continue
 
-        for result in results[:MAX_RESULTS]:
-            title = result.get("title", "")
-            fuzzy_score = fuzz.token_sort_ratio(cleaned, title.lower())
-            substring_hit = cleaned in title.lower()
-            tmdb_id = result.get("id")
-            movie_details = fetch_tmdb_movie_details(tmdb_id)
+        top_n = results[:args.results]
+        best_score = 0
+        best = None
 
-            genres = [g['name'].lower() for g in movie_details.get("genres", [])]
-            runtime = movie_details.get("runtime") or 0
-            overview = (movie_details.get("overview") or "").lower()
+        for r in top_n:
+            ratio = SequenceMatcher(None, cleaned, clean(r["title"])).ratio()
+            score = ratio * 100
+            if score > best_score:
+                best_score = score
+                best = r
 
-            if runtime < 20 or any(term in genres for term in ["documentary", "tv movie", "short"]):
-                continue
-
-            composite_score = fuzzy_score
-            reasons = [f"fuzzy:{fuzzy_score}"]
-            if substring_hit:
-                composite_score += 10
-                reasons.append("substring")
-            if any(term in genres for term in ["action", "drama", "music"]):
-                composite_score += 5
-                reasons.append("genre_bonus")
-            if any(keyword in overview for keyword in ["video game", "series", "live performance"]):
-                composite_score -= 5
-                reasons.append("overview_penalty")
-
-            if composite_score > best_score:
-                best_score = composite_score
-                best_match = result.copy()
-                best_match.update({
-                    "mb_soundtrack_title": mb_title,
-                    "tmdb_query_used": cleaned,
-                    "composite_score": composite_score,
-                    "match_reasons": ", ".join(reasons)
-                })
-
-        if best_match:
-            AUDIT_LOG.append({
-                "mb_title": mb_title,
-                "tmdb_title": best_match.get("title"),
-                "score": best_score,
-                "reasons": reasons,
-                "final_decision": "strong" if best_score >= COMPOSITE_THRESHOLD else "loose"
-            })
-            if best_score >= COMPOSITE_THRESHOLD:
-                rows_strong.append(best_match)
-            else:
-                rows_weak.append(best_match)
+        if best_score >= 90:
+            raw_matches.append({"mb_title": original, "tmdb_id": best["id"], "score": round(best_score, 1)})
+            print(f"    ✅ Best match score: {best_score:.1f} — strong")
         else:
-            errors.append(f"{mb_title} | No good match above threshold (best_score={best_score})")
-            rows_zero.append({"mb_title": mb_title, "query": cleaned})
+            loose_matches.append({"mb_title": original, "candidates": len(results), "best_score": round(best_score, 1)})
+            print(f"    ❔ No match above threshold")
+
+        time.sleep(0.25)
 
     except Exception as e:
-        print(f"ERROR on row {i}: {e}")
-        errors.append(f"{mb_title} | ERROR: {e}")
-        rows_zero.append({"mb_title": mb_title, "query": cleaned})
+        print(f"    ❌ TMDb query error: {e}")
+        errors.append(original)
 
-# --- OUTPUTS ---
-pd.DataFrame(rows_strong).to_csv(OUTPUT_STRONG, index=False)
-pd.DataFrame(rows_weak).to_csv(OUTPUT_WEAK, index=False)
-pd.DataFrame(rows_zero).to_csv(OUTPUT_ZERO_HITS, index=False)  # ALWAYS written
+# --- Save results ---
+pd.DataFrame(raw_matches).to_csv(TMDB_FILES["raw"], index=False)
+pd.DataFrame(loose_matches).to_csv(TMDB_FILES["loose"], index=False)
+pd.DataFrame(no_results).to_csv(TMDB_FILES["no_results"], index=False)
+with open(TMDB_FILES["errors"], "w", encoding="utf-8") as f:
+    for title in errors:
+        f.write(title + "\n")
 
-with open(OUTPUT_ERROR, "w", encoding="utf-8") as f:
-    f.write("\n".join(errors))
-
-try:
-    pd.DataFrame(AUDIT_LOG).to_csv("tmdb_match_audit.csv", index=False)
-except Exception as e:
-    print(f"Audit log write failed: {e}")
-
-print(f"\nDone. Strong matches: {len(rows_strong)} | Loose: {len(rows_weak)} | Zero-hits: {len(rows_zero)} | Errors: {len(errors)}")
+print("\nDone.")
+print(f"Strong matches: {len(raw_matches)} | Loose: {len(loose_matches)} | Zero-hits: {len(no_results)} | Errors: {len(errors)}")

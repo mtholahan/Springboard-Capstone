@@ -1,32 +1,38 @@
+"""
+09_tmdb_normalize_genres.py
+
+Explode comma-separated genre strings from TMDb into a normalized format.
+"""
+
 import pandas as pd
+from config import TMDB_FILES
 
-# Load the TMDb enriched movie dataset
-df = pd.read_csv("D:/Temp/mbdump/tmdb_top_1000_enriched.csv")
+INPUT_CSV = TMDB_FILES["enriched_top_1000"]
+MOVIE_GENRE_OUT = TMDB_FILES["enriched_top_1000"].with_name("tmdb_movie_genre.csv")
+GENRE_DIM_OUT = TMDB_FILES["enriched_top_1000"].with_name("tmdb_genre.csv")
 
-# Extract tmdb_id and genres, dropping any rows without genres
-df_genres = df[["tmdb_id", "genres"]].dropna()
+# --- LOAD ---
+df = pd.read_csv(INPUT_CSV)
+df = df.dropna(subset=["genres"])
 
-# Split genre strings and explode into individual rows
-df_genres["genre"] = df_genres["genres"].str.split("|")
-df_exploded = df_genres.explode("genre").drop(columns=["genres"]).dropna()
+# --- NORMALIZE ---
+all_genres = set()
+movie_genre_records = []
 
-# Create genre lookup table with genre_id
-df_genre_lookup = (
-    df_exploded[["genre"]]
-    .drop_duplicates()
-    .reset_index(drop=True)
-    .reset_index()
-    .rename(columns={"index": "genre_id", "genre": "name"})
-)
+for _, row in df.iterrows():
+    genres = [g.strip() for g in row["genres"].split(",") if g.strip()]
+    for genre in genres:
+        all_genres.add(genre)
+        movie_genre_records.append({
+            "tmdb_id": row["tmdb_id"],
+            "genre": genre
+        })
 
-# Map genre names to IDs in movie-genre table
-genre_map = dict(zip(df_genre_lookup["name"], df_genre_lookup["genre_id"]))
-df_movie_genre = df_exploded.copy()
-df_movie_genre["genre_id"] = df_movie_genre["genre"].map(genre_map)
-df_movie_genre = df_movie_genre[["tmdb_id", "genre_id"]]
+genre_dim = pd.DataFrame(sorted(all_genres), columns=["genre"])
+movie_genre = pd.DataFrame(movie_genre_records)
 
-# Save to CSV
-df_genre_lookup.to_csv("D:/Temp/mbdump/tmdb_genre.csv", index=False)
-df_movie_genre.to_csv("D:/Temp/mbdump/tmdb_movie_genre.csv", index=False)
+# --- SAVE ---
+genre_dim.to_csv(GENRE_DIM_OUT, index=False)
+movie_genre.to_csv(MOVIE_GENRE_OUT, index=False)
 
-print("✅ Genre normalization complete. Files written to D:/Temp/mbdump/")
+print(f"✅ Normalized genres written to:\n- {GENRE_DIM_OUT}\n- {MOVIE_GENRE_OUT}")

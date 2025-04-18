@@ -1,82 +1,62 @@
 """
 07_tmdb_enrich_movies.py
 
-Enriches a list of TMDb movies with additional metadata via API calls.
-
-- Reads from a user-specified CSV (must contain TMDb IDs and titles)
-- Calls TMDb's /movie/{id} endpoint for details
-- Adds genre names, media type, fuzzy score placeholder
-- Outputs enriched data to CSV
-
-Usage:
-python 07_tmdb_enrich_movies.py --input "D:/Temp/mbdump/tmdb_movies.csv"
-
-Output:
-- D:/Temp/mbdump/tmdb_enriched_movies.csv
+Fetch full TMDb metadata and alternative titles for a list of movie IDs.
+Source: Top 500 movies CSV. Output: Enriched movie details.
 """
 
 import pandas as pd
 import requests
 import time
-import argparse
+from config import TMDB_TOP_500_FILE, TMDB_FILES, TMDB_API_KEY
 
-API_KEY = '8289cf63ae0018475953afaf51ce5464'
-GENRES_URL = 'https://api.themoviedb.org/3/genre/movie/list'
-MOVIE_URL = 'https://api.themoviedb.org/3/movie/{}'
-DEFAULT_INPUT = 'D:/Temp/mbdump/tmdb_movies.csv'
-OUTPUT_PATH = 'D:/Temp/mbdump/tmdb_enriched_movies.csv'
+API_BASE = "https://api.themoviedb.org/3/movie"
+INPUT_CSV = TMDB_TOP_500_FILE
+OUTPUT_CSV = TMDB_FILES["enriched_top_500"]
 
-parser = argparse.ArgumentParser()
-parser.add_argument('--input', type=str, default=DEFAULT_INPUT, help='Path to input CSV containing TMDb movie IDs')
-args = parser.parse_args()
+sleep_time = 0.2
 
-def get_genre_lookup():
-    r = requests.get(GENRES_URL, params={'api_key': API_KEY})
-    genre_data = r.json().get('genres', [])
-    return {g['id']: g['name'] for g in genre_data}
+# --- LOAD INPUT ---
+df = pd.read_csv(INPUT_CSV)
+df = df.dropna(subset=["tmdb_id"])
 
-def fetch_movie_details(movie_id):
-    url = MOVIE_URL.format(movie_id)
-    r = requests.get(url, params={'api_key': API_KEY})
-    if r.status_code == 200:
-        return r.json()
-    return None
+records = []
 
-def main():
-    df = pd.read_csv(args.input)
-    genre_lookup = get_genre_lookup()
-    enriched = []
+for i, row in df.iterrows():
+    tmdb_id = int(row["tmdb_id"])
+    title = row["title"]
+    print(f"[{i+1}/{len(df)}] Fetching TMDb ID {tmdb_id}: {title}")
 
-    total = len(df)
-    start_time = time.time()
+    try:
+        # Movie Details
+        detail_url = f"{API_BASE}/{tmdb_id}"
+        detail_params = {"api_key": TMDB_API_KEY}
+        detail_resp = requests.get(detail_url, params=detail_params, timeout=10)
+        detail_data = detail_resp.json()
+        time.sleep(sleep_time)
 
-    for idx, row in df.iterrows():
-        movie_id = row['id']
-        title = row['title']
-        print(f"🔍 [{idx + 1}/{total}] Fetching TMDb ID {movie_id} – {title}")
-        try:
-            data = fetch_movie_details(movie_id)
-            if data:
-                genres = [genre_lookup.get(g['id'], '') for g in data.get('genres', [])]
-                enriched.append({
-                    'input_title': title,
-                    'input_year': row['release_date'][:4] if pd.notna(row['release_date']) else '',
-                    'tmdb_title': data.get('title'),
-                    'tmdb_year': data.get('release_date'),
-                    'media_type': 'movie',
-                    'tmdb_id': data.get('id'),
-                    'popularity': data.get('popularity'),
-                    'fuzzy_score': '',  # placeholder
-                    'genres': ', '.join(genres) if genres else 'Unknown'
-                })
-        except Exception as e:
-            print(f'⚠️ Error fetching TMDb ID {movie_id}: {e}')
-        time.sleep(0.3)
+        # Alternative Titles
+        alt_url = f"{API_BASE}/{tmdb_id}/alternative_titles"
+        alt_resp = requests.get(alt_url, params=detail_params, timeout=10)
+        alt_data = alt_resp.json()
+        time.sleep(sleep_time)
 
-    pd.DataFrame(enriched).to_csv(OUTPUT_PATH, index=False)
-    elapsed = time.time() - start_time
-    print(f'✅ Enriched data saved to {OUTPUT_PATH}')
-    print(f'⏱️ Completed in {elapsed:.2f} seconds.')
+        alt_titles = [alt["title"] for alt in alt_data.get("titles", []) if "title" in alt]
 
-if __name__ == '__main__':
-    main()
+        record = {
+            "tmdb_id": tmdb_id,
+            "title": title,
+            "release_year": row.get("release_year"),
+            "runtime": detail_data.get("runtime"),
+            "genres": ", ".join([g["name"] for g in detail_data.get("genres", [])]),
+            "overview": detail_data.get("overview"),
+            "alt_titles": ", ".join(alt_titles),
+        }
+        records.append(record)
+
+    except Exception as e:
+        print(f"❌ Error fetching ID {tmdb_id}: {e}")
+
+# --- SAVE ---
+pd.DataFrame(records).to_csv(OUTPUT_CSV, index=False)
+print(f"✅ Done. Saved enriched data to {OUTPUT_CSV}")
