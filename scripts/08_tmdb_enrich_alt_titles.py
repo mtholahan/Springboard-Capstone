@@ -1,22 +1,27 @@
 """
-08_tmdb_enrich_afi.py
+08_tmdb_enrich_alt_titles.py
 
-Fetch full TMDb metadata and alt titles for AFI Top 100 list (enrichment variant).
+Fetch full TMDb metadata and alternative titles for the Top N movie list.
+Enhances and overwrites enriched_top_{TOP_N}.csv with alt titles, runtime, overview, genres.
+Filters out alt titles with known mojibake/junk patterns.
 """
 
 import pandas as pd
 import requests
 import time
-from config import TMDB_FILES, TMDB_API_KEY
+from config import ENRICHED_FILE, TMDB_API_KEY
 
-INPUT_CSV = TMDB_FILES["enriched_top_1000"]
-OUTPUT_CSV = TMDB_FILES["enriched_top_1000"]  # Overwrite or change if needed
 API_BASE = "https://api.themoviedb.org/3/movie"
-sleep_time = 0.2
+sleep_time = 0.3
 
 # --- LOAD INPUT ---
-df = pd.read_csv(INPUT_CSV)
+df = pd.read_csv(ENRICHED_FILE)
 df = df.dropna(subset=["tmdb_id"])
+
+# --- Helper to detect mojibake ---
+def is_clean(text):
+    junk_fragments = ['ã€', 'Ã', 'â€™', 'â€“', 'â€œ', 'â€']
+    return not any(fragment in text for fragment in junk_fragments)
 
 records = []
 
@@ -37,7 +42,7 @@ for i, row in df.iterrows():
         alt_data = alt_resp.json()
         time.sleep(sleep_time)
 
-        alt_titles = [alt["title"] for alt in alt_data.get("titles", []) if "title" in alt]
+        alt_titles = [alt.get("title", "") for alt in alt_data.get("titles", []) if is_clean(alt.get("title", ""))]
 
         record = {
             "tmdb_id": tmdb_id,
@@ -54,5 +59,5 @@ for i, row in df.iterrows():
         print(f"❌ Error with ID {tmdb_id}: {e}")
 
 # --- SAVE ---
-pd.DataFrame(records).to_csv(OUTPUT_CSV, index=False)
-print(f"✅ Done. Saved enriched AFI data to {OUTPUT_CSV}")
+pd.DataFrame(records).to_csv(ENRICHED_FILE, index=False, encoding="utf-8")
+print(f"✅ Done. Enriched metadata saved to {ENRICHED_FILE}")

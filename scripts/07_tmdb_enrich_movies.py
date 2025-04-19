@@ -2,22 +2,20 @@
 07_tmdb_enrich_movies.py
 
 Fetch full TMDb metadata and alternative titles for a list of movie IDs.
-Source: Top 500 movies CSV. Output: Enriched movie details.
+Input: Top N movies CSV
+Output: Enriched TMDb metadata to a parameterized output file.
 """
 
 import pandas as pd
 import requests
 import time
-from config import TMDB_TOP_500_FILE, TMDB_FILES, TMDB_API_KEY
+from config import TOP_MOVIES_INPUT_FILE, ENRICHED_FILE, TMDB_API_KEY, TOP_N
 
 API_BASE = "https://api.themoviedb.org/3/movie"
-INPUT_CSV = TMDB_TOP_500_FILE
-OUTPUT_CSV = TMDB_FILES["enriched_top_500"]
-
-sleep_time = 0.2
+sleep_time = 0.25 if TOP_N <= 1000 else 0.3
 
 # --- LOAD INPUT ---
-df = pd.read_csv(INPUT_CSV)
+df = pd.read_csv(TOP_MOVIES_INPUT_FILE)
 df = df.dropna(subset=["tmdb_id"])
 
 records = []
@@ -58,5 +56,5 @@ for i, row in df.iterrows():
         print(f"❌ Error fetching ID {tmdb_id}: {e}")
 
 # --- SAVE ---
-pd.DataFrame(records).to_csv(OUTPUT_CSV, index=False)
-print(f"✅ Done. Saved enriched data to {OUTPUT_CSV}")
+pd.DataFrame(records).to_csv(ENRICHED_FILE, index=False)
+print(f"✅ Done. Saved enriched data to {ENRICHED_FILE}")

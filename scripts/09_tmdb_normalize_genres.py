@@ -1,18 +1,16 @@
 """
 09_tmdb_normalize_genres.py
 
-Explode comma-separated genre strings from TMDb into a normalized format.
+Explode comma-separated genre strings from TMDb into normalized format.
+Input: Enriched Top N file
+Outputs: Normalized genre and movie-genre lookup tables
 """
 
 import pandas as pd
-from config import TMDB_FILES
-
-INPUT_CSV = TMDB_FILES["enriched_top_1000"]
-MOVIE_GENRE_OUT = TMDB_FILES["enriched_top_1000"].with_name("tmdb_movie_genre.csv")
-GENRE_DIM_OUT = TMDB_FILES["enriched_top_1000"].with_name("tmdb_genre.csv")
+from config import ENRICHED_FILE, TMDB_GENRE_FILE, TMDB_MOVIE_GENRE_FILE
 
 # --- LOAD ---
-df = pd.read_csv(INPUT_CSV)
+df = pd.read_csv(ENRICHED_FILE)
 df = df.dropna(subset=["genres"])
 
 # --- NORMALIZE ---
@@ -28,11 +26,12 @@ for _, row in df.iterrows():
             "genre": genre
         })
 
+# --- CONSTRUCT TABLES ---
 genre_dim = pd.DataFrame(sorted(all_genres), columns=["genre"])
 movie_genre = pd.DataFrame(movie_genre_records)
 
 # --- SAVE ---
-genre_dim.to_csv(GENRE_DIM_OUT, index=False)
-movie_genre.to_csv(MOVIE_GENRE_OUT, index=False)
+genre_dim.to_csv(TMDB_GENRE_FILE, index=False)
+movie_genre.to_csv(TMDB_MOVIE_GENRE_FILE, index=False)
 
-print(f"✅ Normalized genres written to:\n- {GENRE_DIM_OUT}\n- {MOVIE_GENRE_OUT}")
+print(f"✅ Normalized genres written to:\n- {TMDB_GENRE_FILE}\n- {TMDB_MOVIE_GENRE_FILE}")

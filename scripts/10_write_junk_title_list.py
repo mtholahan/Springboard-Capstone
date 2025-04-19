@@ -1,5 +1,5 @@
 """
-11_write_junk_title_list.py
+10_write_junk_title_list.py
 
 Creates or overwrites the official junk title list used by fuzzy match scripts.
 """

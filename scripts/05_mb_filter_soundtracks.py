@@ -1,27 +1,76 @@
 """
 05_mb_filter_soundtracks.py
 
-Filters MusicBrainz release_groups to include only soundtrack-related records.
-Outputs a filtered TSV and Parquet file.
+Filters the MusicBrainz release_group and release tables to keep only soundtrack-related entries.
+Saves the result as a Parquet file for use in fuzzy matching (Script 11).
 """
 
 import pandas as pd
-from config import MB_FILES, MB_SOUNDTRACKS_FILE, MB_PARQUET_SOUNDTRACKS
+from pathlib import Path
+from config import BASE_DIR, MB_PARQUET_SOUNDTRACKS
 
-# --- Load input ---
-df = pd.read_csv(MB_FILES["release_group"], sep='\t', low_memory=False, header=None)
-df.columns = [
-    "id", "gid", "name", "artist_credit", "type",
-    "comment", "edits_pending", "last_updated"
-]
+# --- Define input file paths (no extensions) ---
+MB_TSV_DIR = BASE_DIR / "data" / "musicbrainz_raw"
+RELEASE_FILE = MB_TSV_DIR / "release"
+RELEASE_GROUP_FILE = MB_TSV_DIR / "release_group"
+SECONDARY_JOIN_FILE = MB_TSV_DIR / "release_group_secondary_type_join"
+SECONDARY_TYPE_FILE = MB_TSV_DIR / "release_group_secondary_type"
 
-# --- Filter for soundtrack types ---
-soundtrack_df = df.copy()  # Placeholder for real filtering logic later
+# --- Load datasets with logging ---
+print("📥 Loading release_group...")
+rg = pd.read_csv(
+    RELEASE_GROUP_FILE,
+    sep="\t",
+    header=None,
+    names=["id", "gid", "name", "artist_credit", "type", "comment", "edits_pending", "last_updated"],
+    dtype=str
+)
+print(f"✅ Loaded release_group ({len(rg):,} rows)")
 
-# --- Save TSV and Parquet with headers ---
-soundtrack_df.to_csv(MB_SOUNDTRACKS_FILE, sep='\t', index=False, header=True)
-soundtrack_df.to_parquet(MB_PARQUET_SOUNDTRACKS, index=False)
+print("📥 Loading release_group_secondary_type_join...")
+rgs_join = pd.read_csv(
+    SECONDARY_JOIN_FILE,
+    sep="\t",
+    header=None,
+    names=["release_group", "secondary_type"],
+    dtype=str
+)
+print(f"✅ Loaded release_group_secondary_type_join ({len(rgs_join):,} rows)")
 
-print(f"✅ Filtered soundtrack data written to:")
-print(f"   TSV: {MB_SOUNDTRACKS_FILE}")
-print(f"   Parquet: {MB_PARQUET_SOUNDTRACKS}")
+print("📥 Loading release_group_secondary_type...")
+rgs_type = pd.read_csv(
+    SECONDARY_TYPE_FILE,
+    sep="\t",
+    header=None,
+    names=["id", "name", "parent", "child_order", "description", "gid"],
+    dtype=str
+)
+print(f"✅ Loaded release_group_secondary_type ({len(rgs_type):,} rows)")
+
+print("📥 Loading release (this one takes a bit)...")
+release = pd.read_csv(
+    RELEASE_FILE,
+    sep="\t",
+    header=None,
+    names=["id", "gid", "name", "artist_credit", "release_group", "status", "packaging", "language", "script", "barcode", "comment", "edits_pending", "quality", "last_updated"],
+    dtype=str
+)
+print(f"✅ Loaded release ({len(release):,} rows)")
+
+# --- Identify soundtrack type IDs ---
+print("🔍 Available secondary types:")
+print(rgs_type[["id", "name"]])
+
+soundtrack_type_ids = rgs_type[rgs_type["name"].str.lower().str.contains("soundtrack|score", regex=True)]["id"].tolist()
+print("🎼 Matched soundtrack/score type IDs:", soundtrack_type_ids)
+
+# --- Find matching release group IDs ---
+matched_rg_ids = rgs_join[rgs_join["secondary_type"].isin(soundtrack_type_ids)]["release_group"].unique()
+print(f"🔗 Matched release_group IDs: {len(matched_rg_ids):,}")
+
+# --- Filter releases by release_group ---
+filtered_releases = release[release["release_group"].isin(matched_rg_ids)]
+
+# --- Save filtered results ---
+filtered_releases.to_parquet(MB_PARQUET_SOUNDTRACKS, index=False)
+print(f"✅ Saved {len(filtered_releases):,} soundtrack releases to: {MB_PARQUET_SOUNDTRACKS}")

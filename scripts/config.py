@@ -1,50 +1,39 @@
-'''
-config.py
+# config.py
 
-Centralized file path and API key config for Capstone project.
-Update paths to match local dev environment. API key expected via environment.
-'''
-
-import os
 from pathlib import Path
+from datetime import datetime
+import os
 
-# === MusicBrainz File Paths ===
-RAW_DIR = Path("D:/Capstone_Staging/data/musicbrainz_raw")
-MB_FILES = {
-    "artist": RAW_DIR / "artist",
-    "artist_credit": RAW_DIR / "artist_credit",
-    "artist_credit_name": RAW_DIR / "artist_credit_name",
-    "release": RAW_DIR / "release",
-    "release_group": RAW_DIR / "release_group",
-    "release_group_secondary_type": RAW_DIR / "release_group_secondary_type",
-    "release_group_secondary_type_join": RAW_DIR / "release_group_secondary_type_join",
-}
+# --- Base Directory ---
+BASE_DIR = Path("D:/Capstone_Staging")
 
-# === Soundtrack Input and Processed Versions ===
-MB_SOUNDTRACKS_FILE = RAW_DIR / "release_group_soundtracks.tsv"
-MB_PARQUET_SOUNDTRACKS = RAW_DIR / "soundtracks.parquet"
-JUNK_TITLE_LIST = RAW_DIR / "junk_mb_titles.txt"
+# --- Script 06: Build Raw TMDb Input List ---
+TOP_N = 1000  # Change this to dynamically set your input size
+TOP_MOVIES_INPUT_FILE = BASE_DIR / "data" / "tmdb" / f"tmdb_top_movies_raw_{TOP_N}.csv"  # Input list of TMDb IDs
 
-# === TMDb Input and Output Files ===
-TMDB_DIR = Path("D:/Capstone_Staging/data/tmdb")
-TMDB_FILES = {
-    "raw": TMDB_DIR / "tmdb_movie_raw.csv",
-    "loose": TMDB_DIR / "tmdb_movie_loose.csv",
-    "errors": TMDB_DIR / "tmdb_fetch_errors.txt",
-    "no_results": TMDB_DIR / "tmdb_no_results.csv",
-    "enriched_top_500": TMDB_DIR / "tmdb_top_500_enriched.csv",
-    "enriched_top_1000": TMDB_DIR / "tmdb_top_1000_enriched.csv"
-}
+# --- Script 07: Fetch TMDb Metadata ---
+TMDB_API_KEY = os.getenv("TMDB_API_KEY")  # Set this in your system environment variables
 
-# === Top 500 Input CSV ===
-TMDB_TOP_500_FILE = TMDB_DIR / "tmdb_top_500.csv"
+# --- Script 08: Enrich TMDb Metadata ---
+ENRICHED_FILE = BASE_DIR / "data" / "tmdb" / f"enriched_top_{TOP_N}.csv"  # Combined metadata
 
-# === Match Output Locations ===
-MATCH_OUTPUTS = {
-    "matched": TMDB_DIR / "tmdb_fuzzy_matches.tsv",
-    "unmatched": TMDB_DIR / "tmdb_fuzzy_unmatched.tsv",
-    "manual": TMDB_DIR / "manual_matches.csv"
-}
+# --- Script 09: Enrich TMDb Alt Titles & Runtime ---
+# Uses enriched file, overwrites/enhances missing details
 
-# === TMDb API Key (expected via environment) ===
-TMDB_API_KEY = os.getenv("TMDB_API_KEY")
+# --- Script 10: Normalize Genres ---
+TMDB_GENRE_FILE = BASE_DIR / "data" / "tmdb" / f"tmdb_genre_top_{TOP_N}.csv"  # Genre dimension
+TMDB_MOVIE_GENRE_FILE = BASE_DIR / "data" / "tmdb" / f"tmdb_movie_genre_top_{TOP_N}.csv"  # Genre link table
+
+# --- Script 11: Soundtrack Inputs ---
+MB_PARQUET_SOUNDTRACKS = BASE_DIR / "data" / "musicbrainz_raw" / "soundtracks.parquet"
+
+# --- Script 12: Fuzzy Match Support ---
+JUNK_TITLE_LIST = BASE_DIR / "data" / "junk_title_list.txt"
+MATCH_OUTPUT_DIR = BASE_DIR / "results"
+MATCHED_OUTPUT_FILE = MATCH_OUTPUT_DIR / f"matched_top_{TOP_N}.tsv"
+UNMATCHED_OUTPUT_FILE = MATCH_OUTPUT_DIR / f"unmatched_top_{TOP_N}.tsv"
+MANUAL_MATCH_FILE = MATCH_OUTPUT_DIR / "manual_rescue_matches.csv"
+
+# --- Dynamic diagnostics output ---
+TODAY = datetime.now().strftime("%Y-%m-%d")
+MATCH_DIAGNOSTIC_FILE = MATCH_OUTPUT_DIR / f"matched_diagnostics_{TOP_N}_{TODAY}.tsv"
