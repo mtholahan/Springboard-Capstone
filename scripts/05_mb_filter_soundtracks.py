@@ -7,13 +7,12 @@ Saves the result as a Parquet file for use in fuzzy matching (Script 11).
 
 import pandas as pd
 from pathlib import Path
-from config import BASE_DIR, MB_PARQUET_SOUNDTRACKS
+from config import MB_PARQUET_SOUNDTRACKS, MB_SECONDARY_TYPE_JOIN_FILE
 
 # --- Define input file paths (no extensions) ---
-MB_TSV_DIR = BASE_DIR / "data" / "musicbrainz_raw"
+MB_TSV_DIR = MB_PARQUET_SOUNDTRACKS.parent
 RELEASE_FILE = MB_TSV_DIR / "release"
 RELEASE_GROUP_FILE = MB_TSV_DIR / "release_group"
-SECONDARY_JOIN_FILE = MB_TSV_DIR / "release_group_secondary_type_join"
 SECONDARY_TYPE_FILE = MB_TSV_DIR / "release_group_secondary_type"
 
 # --- Load datasets with logging ---
@@ -29,7 +28,7 @@ print(f"✅ Loaded release_group ({len(rg):,} rows)")
 
 print("📥 Loading release_group_secondary_type_join...")
 rgs_join = pd.read_csv(
-    SECONDARY_JOIN_FILE,
+    MB_SECONDARY_TYPE_JOIN_FILE,
     sep="\t",
     header=None,
     names=["release_group", "secondary_type"],
