@@ -1,4 +1,16 @@
-# 13_refresh_postgres_tables.py
+"""
+Script 13 - Refresh Enriched Project Tables in PostgreSQL
+
+This script recreates and loads the main analysis-ready tables into the 'musicbrainz' PostgreSQL database.
+It handles enriched TMDb data, the filtered MusicBrainz soundtracks, and final matching results from the fuzzy linking process.
+Foreign key-sensitive table order is preserved.
+
+Sources include:
+- CSVs for enriched movies, genre data, and movie-genre links
+- Parquet for MusicBrainz soundtracks
+- TSVs for match outputs from the fuzzy pipeline
+
+"""
 
 import pandas as pd
 from sqlalchemy import create_engine, text
