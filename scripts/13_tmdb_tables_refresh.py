@@ -1,8 +1,10 @@
 """
-Script 13 - Refresh Enriched Project Tables in PostgreSQL
+13_tmdb_tables_refresh.py
 
 This script recreates and loads the main analysis-ready tables into the 'musicbrainz' PostgreSQL database.
-It handles enriched TMDb data, the filtered MusicBrainz soundtracks, and final matching results from the fuzzy linking process.
+It handles enriched TMDb data, the filtered MusicBrainz soundtracks, and final matching results from the 
+fuzzy linking process.
+
 Foreign key-sensitive table order is preserved.
 
 Sources include:
@@ -15,6 +17,10 @@ Sources include:
 import pandas as pd
 from sqlalchemy import create_engine, text
 from config import (
+    PG_HOST,
+    PG_PORT,
+    PG_DBNAME,
+    PG_USER,
     PG_PASSWORD,
     ENRICHED_FILE,
     TMDB_GENRE_FILE,
@@ -23,8 +29,9 @@ from config import (
     MATCH_OUTPUTS
 )
 
-# Define PostgreSQL connection
-engine = create_engine(f"postgresql+psycopg2://postgres:{PG_PASSWORD}@localhost:5432/musicbrainz")
+# --- Build the PostgreSQL connection string ---
+DB_URL = f"postgresql+psycopg2://{PG_USER}:{PG_PASSWORD}@{PG_HOST}:{PG_PORT}/{PG_DBNAME}"
+engine = create_engine(DB_URL)
 
 # Map table names to files (order matters for FK constraints)
 REFRESH_INPUTS = {
@@ -56,7 +63,7 @@ with engine.begin() as conn:
             continue
 
         # Recreate the table
-        print(f"🧹 Recreating table {table}...")
+        print(f"🧹 Dropping and recreating table {table}...")
         conn.execute(text(f"DROP TABLE IF EXISTS {table} CASCADE;"))
 
         columns = [f'"{col}" {"TEXT" if df[col].dtype == object else "INTEGER"}' for col in df.columns]
@@ -67,7 +74,7 @@ with engine.begin() as conn:
         """
         conn.execute(text(create_stmt))
 
-        print(f"📄 Inserting {len(df)} rows into {table} ...")
+        print(f"📄 Inserting {len(df):,} rows into {table} ...")
         df.to_sql(table, con=conn, if_exists="append", index=False, method="multi")
 
-print("✅ Refresh complete.")
+print("✅ TMDb tables refreshed.")
