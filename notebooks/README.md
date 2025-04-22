@@ -42,13 +42,13 @@ Queries run against a local PostgreSQL database (`musicbrainz`) using credential
 
 ## 📎 Assets
 
-- 📓 Notebook: [`Step_4_wrapup_with_visuals.ipynb`](./Step_4_wrapup_with_visuals.ipynb)
+- 📓 Notebook: [`Step_4_EDA`](./Step_4_EDA.ipynb)
 - 🧭 ERD Image: [`Step_4_ERD.png`](./Step_4_ERD.png)
 - 📊 Visuals embedded directly in the notebook
 
 ---
 
-## 🔁 Next Steps
+## 🔁 Next StepsC
 
 - Extend this notebook to include TMDb enrichment queries
 - Explore links between soundtrack genres and movie popularity
