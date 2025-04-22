@@ -17,7 +17,7 @@ load_dotenv()
 
 # === Root Directories ===
 BASE_DIR = Path("D:/Capstone_Staging")
-DATA_DIR = BASE_DIR / "data"
+DATA_DIR = Path("D:/Capstone_Staging/data")
 RESULTS_DIR = DATA_DIR / "results"
 TMDB_DIR = DATA_DIR / "tmdb"
 MB_RAW_DIR = DATA_DIR / "musicbrainz_raw"
@@ -27,7 +27,22 @@ MB_DUMP_ARCHIVE = BASE_DIR / "mbdump.tar.bz2"
 MB_DUMP_DIR = BASE_DIR / "mbdump"
 
 # === Script 02: TSV Cleanse ===
+MB_CLEANSED_DIR = MB_RAW_DIR / "cleansed"
+
 MB_TSV_FILES = {
+    "artist": MB_CLEANSED_DIR / "artist",
+    "artist_credit": MB_CLEANSED_DIR / "artist_credit",
+    "artist_credit_name": MB_CLEANSED_DIR / "artist_credit_name",
+    "release": MB_CLEANSED_DIR / "release",
+    "release_group": MB_CLEANSED_DIR / "release_group",
+    "release_group_secondary_type": MB_CLEANSED_DIR / "release_group_secondary_type",
+    "release_group_secondary_type_join": MB_CLEANSED_DIR / "release_group_secondary_type_join",
+}
+
+# Path to raw, unmodified MB TSV files
+MB_RAW_DIR = DATA_DIR / "musicbrainz_raw"
+
+MB_RAW_FILES = {
     "artist": MB_RAW_DIR / "artist",
     "artist_credit": MB_RAW_DIR / "artist_credit",
     "artist_credit_name": MB_RAW_DIR / "artist_credit_name",
@@ -36,6 +51,7 @@ MB_TSV_FILES = {
     "release_group_secondary_type": MB_RAW_DIR / "release_group_secondary_type",
     "release_group_secondary_type_join": MB_RAW_DIR / "release_group_secondary_type_join",
 }
+
 
 # === Script 05: Filtered Soundtracks ===
 MB_PARQUET_SOUNDTRACKS = MB_RAW_DIR / "soundtracks.parquet"

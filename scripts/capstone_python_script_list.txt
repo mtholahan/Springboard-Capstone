@@ -14,6 +14,10 @@ _99_util_clean_title.py
 09_tmdb_normalize_genres.py       
 10_write_junk_title_list.py       
 11_match_fuzzy_link_soundtracks.py
+12_tmdb_add_genre_counts.py       
+13_tmdb_tables_refresh.py         
+14_mb_static_tables_refresh.py    
+15_check_postgres_table_delta.py  
 config.py                         
 rescue_map_builder.py             
 scratchpad.py                     

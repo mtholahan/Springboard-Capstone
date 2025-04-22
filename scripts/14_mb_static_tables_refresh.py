@@ -21,7 +21,7 @@ from config import (
 )
 
 # --- Config ---
-CHUNK_SIZE = 250_000
+CHUNK_SIZE = 50_000
 static_tables = [
     "artist",
     "artist_credit",
