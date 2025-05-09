@@ -1,0 +1,29 @@
+2025-05-08 20:39:14,835 [INFO] Initialized step: 02_cleanse_tsv
+2025-05-08 20:43:01,992 [INFO] Initialized step: 02_cleanse_tsv
+2025-05-08 20:44:11,586 [INFO] Initialized step: 02_cleanse_tsv
+2025-05-08 20:45:51,131 [INFO] Initialized step: 02_cleanse_tsv
+2025-05-08 20:46:15,467 [INFO] [DONE] Cleansed 7 TSV files.
+2025-05-08 20:46:21,915 [ERROR] Error processing artist_credit: field larger than field limit (131072)
+2025-05-08 20:48:01,074 [INFO] Initialized step: 02_cleanse_tsv
+2025-05-08 20:48:19,198 [INFO] [DONE] Cleansed 7 TSV files.
+2025-05-08 20:48:36,953 [INFO] [DONE] Cleansed 7 TSV files.
+2025-05-08 20:48:50,913 [INFO] [DONE] Cleansed 7 TSV files.
+2025-05-08 20:49:33,714 [INFO] [DONE] Cleansed 7 TSV files.
+2025-05-08 20:50:08,538 [INFO] [DONE] Cleansed 7 TSV files.
+2025-05-08 20:50:08,604 [INFO] [DONE] Cleansed 7 TSV files.
+2025-05-08 20:50:11,199 [INFO] [DONE] Cleansed 7 TSV files.
+2025-05-08 21:42:24,923 [INFO] Initialized step: 02_cleanse_tsv
+2025-05-08 21:42:51,545 [ERROR] Error processing artist_credit: field larger than field limit (131072)
+2025-05-08 21:43:05,981 [ERROR] Error processing artist_credit_name: field larger than field limit (131072)
+2025-05-08 21:46:43,150 [INFO] Initialized step: 02_cleanse_tsv
+2025-05-08 21:48:23,368 [INFO] [DONE] Cleansed 7 TSV files.
+2025-05-08 21:50:07,483 [INFO] Initialized step: 02_cleanse_tsv
+2025-05-08 21:53:00,910 [INFO] Initialized step: 02_cleanse_tsv
+2025-05-08 21:53:20,478 [INFO] Cleaned: artist -> artist (2,602,677 rows, 5 skipped)
+2025-05-08 21:53:35,850 [INFO] Cleaned: artist_credit -> artist_credit (3,252,298 rows, 0 skipped)
+2025-05-08 21:53:49,604 [INFO] Cleaned: artist_credit_name -> artist_credit_name (5,945,613 rows, 41 skipped)
+2025-05-08 21:54:19,655 [INFO] Cleaned: release -> release (4,733,249 rows, 2 skipped)
+2025-05-08 21:54:36,842 [INFO] Cleaned: release_group -> release_group (3,689,973 rows, 0 skipped)
+2025-05-08 21:54:36,842 [INFO] Cleaned: release_group_secondary_type -> release_group_secondary_type (11 rows, 0 skipped)
+2025-05-08 21:54:38,454 [INFO] Cleaned: release_group_secondary_type_join -> release_group_secondary_type_join (845,840 rows, 0 skipped)
+2025-05-08 21:54:38,454 [INFO] [DONE] Cleansed 7 TSV files.

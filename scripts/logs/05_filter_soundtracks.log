@@ -1,0 +1,7 @@
+2025-05-08 23:03:06,801 [INFO] Initialized step: 05_filter_soundtracks
+2025-05-08 23:03:34,869 [INFO] [DONE] Wrote 0 soundtracks to D:\Capstone_Staging\data\soundtracks.tsv (4,733,249 skipped)
+2025-05-08 23:04:03,791 [INFO] Initialized step: 05_filter_soundtracks
+2025-05-08 23:04:28,954 [INFO] [DONE] Wrote 0 soundtracks to D:\Capstone_Staging\data\soundtracks.tsv (4,733,249 skipped)
+2025-05-08 23:11:33,897 [INFO] Initialized step: 05_filter_soundtracks
+2025-05-08 23:15:45,028 [INFO] Initialized step: 05_filter_soundtracks
+2025-05-08 23:16:13,875 [INFO] [DONE] Wrote 535,637 soundtracks to D:\Capstone_Staging\data\soundtracks.tsv (4,197,612 skipped)

@@ -1,29 +1,11 @@
 import pandas as pd
-from config import BASE_DIR
 
-mb_dir = BASE_DIR / "data" / "musicbrainz_raw"
+df = pd.read_csv("D:/Capstone_Staging/data/soundtracks.tsv", sep="\t", names=[
+    "release_group_id", "mbid", "title", "release_year", "artist_id", "artist_credit_id",
+    "artist_name", "type", "primary_type", "barcode", "dummy_1",
+    "dummy_2", "dummy_3", "dummy_4", "dummy_5", "artist_sort_name",
+    "dummy_6", "dummy_7", "created", "dummy_8", "artist_gid"
+], header=None, dtype=str)
 
-# Load cleaned join table (2 columns)
-join = pd.read_csv(mb_dir / "release_group_secondary_type_join_clean.tsv", sep="\t", dtype=str)
-
-# Load release table
-release = pd.read_csv(
-    mb_dir / "release",
-    sep="\t",
-    header=None,
-    names=[
-        "id", "gid", "name", "artist_credit", "release_group", "status", "packaging",
-        "language", "script", "barcode", "comment", "edits_pending", "quality", "last_updated"
-    ],
-    dtype=str
-)
-
-# How many of the release_group IDs actually appear in the release table?
-rg_ids = set(join[join["secondary_type"] == "2"]["release_group"])
-release_rg_ids = set(release["release_group"])
-
-matching = rg_ids & release_rg_ids
-
-print(f"🎯 release_group IDs in join file: {len(rg_ids):,}")
-print(f"📦 release_group IDs in release file: {len(release_rg_ids):,}")
-print(f"✅ Matching IDs found: {len(matching):,}")
+print("Valid 4-digit years:", df['release_year'].str.match(r'^\\d{4}$').sum())
+print("Years between 1900–2025:", df['release_year'].astype(str).str.extract(r'(\\d{4})')[0].astype(float).between(1900, 2025).sum())

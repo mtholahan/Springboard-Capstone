@@ -1,0 +1,20 @@
+2025-05-08 12:14:03,742 [INFO] Initialized step: 01_audit_raw
+2025-05-08 12:14:03,742 [INFO] Auditing 7 files in: D:\Capstone_Staging\data\musicbrainz_raw
+2025-05-08 12:14:11,714 [INFO] artist: 2,602,682 rows, 19 columns
+2025-05-08 12:14:13,677 [ERROR] Error reading artist_credit: field larger than field limit (131072)
+2025-05-08 12:14:18,601 [ERROR] Error reading artist_credit_name: field larger than field limit (131072)
+2025-05-08 12:14:29,783 [INFO] release: 4,733,251 rows, 14 columns
+2025-05-08 12:14:36,414 [INFO] release_group: 3,689,973 rows, 8 columns
+2025-05-08 12:14:36,414 [INFO] release_group_secondary_type: 11 rows, 6 columns
+2025-05-08 12:14:37,005 [INFO] release_group_secondary_type_join: 845,840 rows, 3 columns
+2025-05-08 12:14:37,005 [INFO] [DONE] Audited 7 TSV files.
+2025-05-08 12:17:50,464 [INFO] Initialized step: 01_audit_raw
+2025-05-08 12:17:50,464 [INFO] Auditing 7 files in: D:\Capstone_Staging\data\musicbrainz_raw
+2025-05-08 12:17:58,041 [INFO] artist: 2,602,682 rows, 19 columns
+2025-05-08 12:18:03,765 [INFO] artist_credit: 3,252,298 rows, 7 columns
+2025-05-08 12:18:08,933 [INFO] artist_credit_name: 5,945,654 rows, 5 columns
+2025-05-08 12:18:20,062 [INFO] release: 4,733,251 rows, 14 columns
+2025-05-08 12:18:26,604 [INFO] release_group: 3,689,973 rows, 8 columns
+2025-05-08 12:18:26,604 [INFO] release_group_secondary_type: 11 rows, 6 columns
+2025-05-08 12:18:27,250 [INFO] release_group_secondary_type_join: 845,840 rows, 3 columns
+2025-05-08 12:18:27,259 [INFO] [DONE] Audited 7 TSV files.

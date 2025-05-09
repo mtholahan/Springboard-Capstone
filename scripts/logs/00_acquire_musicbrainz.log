@@ -1,0 +1,44 @@
+2025-05-07 22:13:57,828 [INFO] Initialized step: 00_acquire_musicbrainz
+2025-05-07 22:57:41,528 [INFO] Initialized step: 00_acquire_musicbrainz
+2025-05-07 22:57:41,528 [INFO] Checking MusicBrainz fullexport directory...
+2025-05-07 22:57:42,769 [INFO] Trying: https://data.metabrainz.org/pub/musicbrainz/data/fullexport/20250507-001849/mbdump.tar.bz2
+2025-05-07 23:05:34,190 [INFO] Initialized step: 00_acquire_musicbrainz
+2025-05-07 23:05:34,190 [INFO] Checking MusicBrainz fullexport directory...
+2025-05-07 23:05:35,060 [INFO] Trying: https://data.metabrainz.org/pub/musicbrainz/data/fullexport/20250507-001849/mbdump.tar.bz2
+2025-05-07 23:09:56,736 [INFO] Initialized step: 00_acquire_musicbrainz
+2025-05-07 23:09:56,736 [INFO] Checking MusicBrainz fullexport directory...
+2025-05-07 23:09:57,369 [INFO] Trying: https://data.metabrainz.org/pub/musicbrainz/data/fullexport/20250507-001849/mbdump.tar.bz2
+2025-05-07 23:14:08,918 [INFO] Downloaded: D:\Capstone_Staging\data\musicbrainz_raw\mbdump.tar.bz2
+2025-05-07 23:30:58,512 [INFO] Extracted .tar to D:\Capstone_Staging\data\musicbrainz_raw\mbdump.tar
+2025-05-08 10:06:50,840 [INFO] Initialized step: 00_acquire_musicbrainz
+2025-05-08 10:06:50,840 [INFO] Checking MusicBrainz fullexport directory...
+2025-05-08 10:06:51,437 [INFO] Trying: https://data.metabrainz.org/pub/musicbrainz/data/fullexport/20250507-001849/mbdump.tar.bz2
+2025-05-08 10:11:13,792 [INFO] Downloaded: D:\Capstone_Staging\data\musicbrainz_raw\mbdump.tar.bz2
+2025-05-08 10:24:08,932 [INFO] Extracted .tar to D:\Capstone_Staging\data\musicbrainz_raw\mbdump.tar
+2025-05-08 10:27:14,199 [INFO] Extracted: mbdump\artist
+2025-05-08 10:28:22,556 [INFO] Extracted: mbdump\artist_credit
+2025-05-08 10:29:09,933 [INFO] Extracted: mbdump\artist_credit_name
+2025-05-08 10:29:15,829 [INFO] Extracted: mbdump\release
+2025-05-08 10:29:29,316 [INFO] Extracted: mbdump\release_group
+2025-05-08 10:29:33,217 [INFO] Extracted: mbdump\release_group_secondary_type
+2025-05-08 10:29:42,713 [INFO] Extracted: mbdump\release_group_secondary_type_join
+2025-05-08 10:29:42,716 [INFO] Removed: D:\Capstone_Staging\data\musicbrainz_raw\mbdump.tar.bz2
+2025-05-08 10:29:42,719 [INFO] Removed: D:\Capstone_Staging\data\musicbrainz_raw\mbdump.tar
+2025-05-08 10:41:21,609 [INFO] Initialized step: 00_acquire_musicbrainz
+2025-05-08 10:41:21,653 [INFO] Checking MusicBrainz fullexport directory...
+2025-05-08 10:41:22,419 [INFO] Trying: https://data.metabrainz.org/pub/musicbrainz/data/fullexport/20250507-001849/mbdump.tar.bz2
+2025-05-08 10:41:38,291 [INFO] Initialized step: 00_acquire_musicbrainz
+2025-05-08 10:41:38,293 [INFO] Checking MusicBrainz fullexport directory...
+2025-05-08 10:41:38,732 [INFO] Trying: https://data.metabrainz.org/pub/musicbrainz/data/fullexport/20250507-001849/mbdump.tar.bz2
+2025-05-08 10:45:50,387 [INFO] Downloaded: D:\Capstone_Staging\data\musicbrainz_raw\mbdump.tar.bz2
+2025-05-08 10:54:21,459 [INFO] Extracted .tar to D:\Capstone_Staging\data\musicbrainz_raw\mbdump.tar
+2025-05-08 11:56:58,251 [INFO] Extracted: mbdump\artist
+2025-05-08 11:57:07,743 [INFO] Extracted: mbdump\artist_credit
+2025-05-08 11:57:13,537 [INFO] Extracted: mbdump\artist_credit_name
+2025-05-08 11:57:30,617 [INFO] Extracted: mbdump\release
+2025-05-08 11:57:41,990 [INFO] Extracted: mbdump\release_group
+2025-05-08 11:57:46,973 [INFO] Extracted: mbdump\release_group_secondary_type
+2025-05-08 11:57:52,281 [INFO] Extracted: mbdump\release_group_secondary_type_join
+2025-05-08 11:57:52,310 [INFO] Removed: D:\Capstone_Staging\data\musicbrainz_raw\mbdump.tar.bz2
+2025-05-08 11:57:53,101 [INFO] Removed: D:\Capstone_Staging\data\musicbrainz_raw\mbdump.tar
+2025-05-08 11:57:53,101 [INFO] [OK] Finished extracting 7 files to D:\Capstone_Staging\data\musicbrainz_raw

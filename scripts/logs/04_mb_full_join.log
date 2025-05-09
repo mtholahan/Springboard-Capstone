@@ -1,0 +1,11 @@
+2025-05-08 22:40:10,874 [INFO] Initialized step: 04_mb_full_join
+2025-05-08 22:40:31,930 [INFO] Loaded release: 4,733,249 rows
+2025-05-08 22:40:42,853 [INFO] Loaded release_group: 3,689,973 rows
+2025-05-08 22:42:37,566 [INFO] Initialized step: 04_mb_full_join
+2025-05-08 22:42:57,684 [INFO] Loaded release: 4,733,249 rows
+2025-05-08 22:43:08,846 [INFO] Loaded release_group: 3,689,973 rows
+2025-05-08 22:45:53,149 [INFO] Initialized step: 04_mb_full_join
+2025-05-08 22:46:13,048 [INFO] Loaded release: 4,733,249 rows
+2025-05-08 22:46:23,925 [INFO] Loaded release_group: 3,689,973 rows
+2025-05-08 22:46:52,032 [INFO] Loaded artist_credit: 3,252,298 rows
+2025-05-08 22:47:42,335 [INFO] [DONE] Wrote joined dataset to D:\Capstone_Staging\data\joined_release_data.tsv (4,733,249 rows)
