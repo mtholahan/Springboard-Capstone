@@ -39,6 +39,9 @@ MB_DUMP_DIR = BASE_DIR / "mbdump"
 MB_PARQUET_SOUNDTRACKS = MB_RAW_DIR / "soundtracks.parquet"
 MB_SECONDARY_TYPE_JOIN_FILE = MB_RAW_DIR / "release_group_secondary_type_join_clean.tsv"
 
+# === TMDB API Key ===
+TMDB_API_KEY = os.getenv("TMDB_API_KEY")
+
 # === TMDb Data Inputs ===
 TOP_MOVIES_FILE = DATA_DIR / "top_movies_raw.csv"
 ENRICHED_FILE = TMDB_DIR / "enriched_top_1000.csv"

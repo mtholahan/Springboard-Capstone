@@ -2,11 +2,13 @@ import pandas as pd
 from pathlib import Path
 import re
 
-INPUT_PATH = Path("D:/Capstone_Staging/data/soundtracks.tsv")
-OUTPUT_PATH = Path("D:/Capstone_Staging/data/tmdb_input_candidates.csv")
+# --- Config ---
+INPUT_SOUNDTRACKS = Path("D:/Capstone_Staging/data/soundtracks.tsv")
+JUNK_TITLES_FILE = Path("D:/Capstone_Staging/data/musicbrainz_raw/junk_mb_titles.txt")
+OUTPUT_CANDIDATES = Path("D:/Capstone_Staging/data/tmdb/tmdb_input_candidates.csv")
 
-# Update column names based on actual TSV structure
-col_names = [
+# --- Load soundtrack columns ---
+soundtrack_cols = [
     "release_group_id", "mbid", "title", "release_year", "artist_id", "artist_credit_id",
     "artist_name", "type", "primary_type", "barcode", "dummy_1",
     "dummy_2", "dummy_3", "dummy_4", "dummy_5", "artist_sort_name",
@@ -14,35 +16,30 @@ col_names = [
 ]
 
 def normalize_title(title):
-    # Lowercase, remove special characters, strip
+    if pd.isna(title):
+        return ""
     return re.sub(r"[^a-z0-9\s]", "", title.lower()).strip()
 
-def extract_year(value):
-    match = re.match(r'^(\d{4})', str(value))
-    return int(match.group(1)) if match else None
-
 def main():
-    print("Loading filtered soundtracks...")
-    df = pd.read_csv(INPUT_PATH, sep="\t", names=col_names, header=None, dtype=str)
+    print("🔍 Loading soundtracks...")
+    df = pd.read_csv(INPUT_SOUNDTRACKS, sep="\t", names=soundtrack_cols, header=None, dtype=str)
 
-    print(f"Initial row count: {len(df):,}")
-    df = df[['title', 'release_year']].dropna()
-    df = df.rename(columns={'title': 'release_group_name', 'release_year': 'year'})
+    print("🔧 Normalizing titles...")
+    df["normalized_title"] = df["title"].apply(normalize_title)
+    df = df[df["normalized_title"].str.len() >= 3]
 
-    df['year'] = df['year'].apply(extract_year)
-    df = df.dropna(subset=['year'])
-    df['year'] = df['year'].astype(int)
-    df = df[df['year'].between(1900, 2025)]
+    if JUNK_TITLES_FILE.exists():
+        junk = set(Path(JUNK_TITLES_FILE).read_text(encoding="utf-8").splitlines())
+        df = df[~df["normalized_title"].isin(junk)]
 
-    df['normalized_title'] = df['release_group_name'].apply(normalize_title)
-    df = df[df['normalized_title'].str.len() >= 3]
+    print("🧼 Filtering duplicates and junk...")
+    df = df.drop_duplicates(subset=["normalized_title"])
+    output_df = df[["normalized_title", "release_group_id"]].copy()
 
-    df = df[['normalized_title', 'year']].drop_duplicates()
-    df = df.sort_values(['year', 'normalized_title'])
-
-    print(f"Output row count: {len(df):,}")
-    df.to_csv(OUTPUT_PATH, index=False)
-    print(f"Saved to {OUTPUT_PATH}")
+    print(f"✅ Final output row count: {len(output_df):,}")
+    OUTPUT_CANDIDATES.parent.mkdir(parents=True, exist_ok=True)
+    output_df.to_csv(OUTPUT_CANDIDATES, index=False)
+    print(f"✅ Saved to {OUTPUT_CANDIDATES}")
 
 if __name__ == "__main__":
     main()
