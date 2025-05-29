@@ -6,7 +6,7 @@ from base_step import BaseStep
 from config import MB_RAW_DIR, MB_CLEANSED_DIR, TSV_WHITELIST
 
 class Step02CleanseTSV(BaseStep):
-    def __init__(self, name):
+    def __init__(self, name="Step 02 Cleanse TSV"):
         super().__init__(name)
 
     def run(self):

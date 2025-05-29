@@ -7,7 +7,7 @@ from config import MB_RAW_DIR, TSV_WHITELIST
 
 class Step01AuditRaw(BaseStep):
 
-    def __init__(self, name):
+    def __init__(self, name="Step 01 Audit Raw"):
         super().__init__(name)
 
     def run(self):

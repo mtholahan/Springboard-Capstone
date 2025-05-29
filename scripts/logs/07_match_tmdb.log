@@ -1,0 +1,80 @@
+2025-05-28 23:15:26,273 [INFO] Initialized step: 07_match_tmdb
+2025-05-28 23:15:26,273 [INFO] 🎬 Loading TMDb movie titles...
+2025-05-28 23:15:26,468 [INFO] 🎧 Loading soundtrack candidates...
+2025-05-28 23:15:26,473 [INFO] 🔍 Matching titles...
+2025-05-28 23:18:05,337 [INFO] Initialized step: 07_match_tmdb
+2025-05-28 23:18:05,337 [INFO] 🎬 Loading TMDb movie titles...
+2025-05-28 23:18:05,364 [INFO] 🎧 Loading soundtrack candidates...
+2025-05-28 23:18:05,370 [INFO] 🔍 Matching titles...
+2025-05-28 23:18:05,691 [INFO] ✅ Saved 0 matches to D:\Capstone_Staging\data\tmdb\tmdb_match_results.csv
+2025-05-28 23:19:48,092 [INFO] Initialized step: 07_match_tmdb
+2025-05-28 23:19:48,093 [INFO] 🎬 Loading TMDb movie titles...
+2025-05-28 23:19:48,120 [INFO] 🎧 Loading soundtrack candidates...
+2025-05-28 23:19:48,124 [INFO] 🔍 Matching titles...
+2025-05-28 23:19:48,533 [INFO] ✅ Saved 3 matches to D:\Capstone_Staging\data\tmdb\tmdb_match_results.csv
+2025-05-28 23:28:27,092 [INFO] Initialized step: 07_match_tmdb
+2025-05-28 23:28:27,093 [INFO] 🎬 Loading TMDb movie titles...
+2025-05-28 23:28:27,122 [INFO] 🎧 Loading soundtrack candidates...
+2025-05-28 23:28:27,127 [INFO] 🔍 Matching titles...
+2025-05-28 23:28:27,431 [INFO] ✅ Saved 0 matches to D:\Capstone_Staging\data\tmdb\tmdb_match_results.csv
+2025-05-28 23:28:27,431 [INFO] 📉 Top 10 non-matching titles (below threshold):
+2025-05-28 23:28:27,431 [INFO] 1. Nostalgia → nostalgie (88.88888888888889)
+2025-05-28 23:28:27,432 [INFO] 2. The Ultimate Gift → the ultimate hits (88.23529411764706)
+2025-05-28 23:28:27,432 [INFO] 3. The Best Offer → the best of fuel (86.66666666666667)
+2025-05-28 23:28:27,432 [INFO] 4. The Celebration → celebration (84.61538461538461)
+2025-05-28 23:28:27,432 [INFO] 5. Inception → conception (84.21052631578947)
+2025-05-28 23:28:27,432 [INFO] 6. The Promised Land → the promised (82.75862068965517)
+2025-05-28 23:28:27,433 [INFO] 7. The Great War → the great (81.81818181818181)
+2025-05-28 23:28:27,433 [INFO] 8. Love, Simon → love songs (80.0)
+2025-05-28 23:28:27,433 [INFO] 9. The Best of Youth → the best of fuel (78.78787878787878)
+2025-05-28 23:28:27,433 [INFO] 10. The Great Escape → the greatest (78.57142857142857)
+2025-05-28 23:33:46,442 [INFO] Initialized step: 07_match_tmdb
+2025-05-28 23:33:46,443 [INFO] 🎬 Loading TMDb movie titles...
+2025-05-28 23:33:46,472 [INFO] 🎧 Loading soundtrack candidates...
+2025-05-28 23:33:46,476 [INFO] 🔍 Matching titles...
+2025-05-28 23:33:46,729 [INFO] ✅ Saved 5 matches to D:\Capstone_Staging\data\tmdb\tmdb_match_results.csv
+2025-05-28 23:33:46,730 [INFO] 📉 Top 10 non-matching titles (below threshold):
+2025-05-28 23:33:46,730 [INFO] 1. The Promised Land → the promised (82.75862068965517)
+2025-05-28 23:33:46,731 [INFO] 2. The Great War → the great (81.81818181818181)
+2025-05-28 23:33:46,731 [INFO] 3. Love, Simon → love songs (80.0)
+2025-05-28 23:33:46,732 [INFO] 4. The Best of Youth → the best of fuel (78.78787878787878)
+2025-05-28 23:33:46,732 [INFO] 5. The Great Escape → the greatest (78.57142857142857)
+2025-05-28 23:33:46,732 [INFO] 6. Robot Dreams → moon dreams (78.26086956521739)
+2025-05-28 23:33:46,732 [INFO] 7. Blue Velvet → black velvet (78.26086956521739)
+2025-05-28 23:33:46,733 [INFO] 8. Children of Paradise → bird of paradise (77.77777777777779)
+2025-05-28 23:33:46,733 [INFO] 9. Toy Story → the story (77.77777777777779)
+2025-05-28 23:33:46,733 [INFO] 10. About Time → fat time (77.77777777777779)
+2025-05-28 23:41:55,903 [INFO] Initialized step: 07_match_tmdb
+2025-05-28 23:41:55,903 [INFO] 🎬 Loading TMDb movie titles...
+2025-05-28 23:42:25,317 [INFO] Initialized step: 07_match_tmdb
+2025-05-28 23:42:25,317 [INFO] 🎬 Loading TMDb movie titles...
+2025-05-28 23:42:25,348 [INFO] 🎧 Loading soundtrack candidates...
+2025-05-28 23:42:25,352 [INFO] 🔍 Matching titles...
+2025-05-28 23:42:25,687 [INFO] ✅ Saved 5 matches to D:\Capstone_Staging\data\tmdb\tmdb_match_results.csv
+2025-05-28 23:42:25,688 [INFO] 📉 Top 10 non-matching titles (below threshold):
+2025-05-28 23:42:25,688 [INFO] 1. The Promised Land → the promised (82.75862068965517)
+2025-05-28 23:42:25,688 [INFO] 2. The Great War → the great (81.81818181818181)
+2025-05-28 23:42:25,689 [INFO] 3. Love, Simon → love songs (80.0)
+2025-05-28 23:42:25,689 [INFO] 4. The Best of Youth → the best of fuel (78.78787878787878)
+2025-05-28 23:42:25,689 [INFO] 5. The Great Escape → the greatest (78.57142857142857)
+2025-05-28 23:42:25,689 [INFO] 6. Robot Dreams → moon dreams (78.26086956521739)
+2025-05-28 23:42:25,690 [INFO] 7. Blue Velvet → black velvet (78.26086956521739)
+2025-05-28 23:42:25,690 [INFO] 8. Children of Paradise → bird of paradise (77.77777777777779)
+2025-05-28 23:42:25,690 [INFO] 9. Toy Story → the story (77.77777777777779)
+2025-05-28 23:42:25,690 [INFO] 10. About Time → fat time (77.77777777777779)
+2025-05-28 23:43:37,492 [INFO] Initialized step: 07_match_tmdb
+2025-05-28 23:43:37,493 [INFO] 🎬 Loading TMDb movie titles...
+2025-05-28 23:43:37,522 [INFO] 🎧 Loading soundtrack candidates...
+2025-05-28 23:43:37,526 [INFO] 🔍 Matching titles...
+2025-05-28 23:43:37,781 [INFO] ✅ Saved 5 matches to D:\Capstone_Staging\data\tmdb\tmdb_match_results.csv
+2025-05-28 23:43:37,782 [INFO] 📉 Top 10 non-matching titles (below threshold):
+2025-05-28 23:43:37,782 [INFO] 1. The Promised Land → the promised (82.75862068965517)
+2025-05-28 23:43:37,783 [INFO] 2. The Great War → the great (81.81818181818181)
+2025-05-28 23:43:37,783 [INFO] 3. Love, Simon → love songs (80.0)
+2025-05-28 23:43:37,784 [INFO] 4. The Best of Youth → the best of fuel (78.78787878787878)
+2025-05-28 23:43:37,785 [INFO] 5. The Great Escape → the greatest (78.57142857142857)
+2025-05-28 23:43:37,785 [INFO] 6. Robot Dreams → moon dreams (78.26086956521739)
+2025-05-28 23:43:37,785 [INFO] 7. Blue Velvet → black velvet (78.26086956521739)
+2025-05-28 23:43:37,785 [INFO] 8. Children of Paradise → bird of paradise (77.77777777777779)
+2025-05-28 23:43:37,785 [INFO] 9. Toy Story → the story (77.77777777777779)
+2025-05-28 23:43:37,785 [INFO] 10. About Time → fat time (77.77777777777779)

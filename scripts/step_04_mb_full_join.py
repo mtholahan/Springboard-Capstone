@@ -6,7 +6,7 @@ from base_step import BaseStep
 from config import MB_CLEANSED_DIR, DATA_DIR, TSV_WHITELIST
 
 class Step04MBFullJoin(BaseStep):
-    def __init__(self, name):
+    def __init__(self, name="Step 04 MB Full Join"):
         super().__init__(name)
         self.data = {}
 

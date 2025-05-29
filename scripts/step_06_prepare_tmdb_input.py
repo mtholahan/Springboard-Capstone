@@ -1,45 +1,53 @@
+# step_06_prepare_tmdb_input.py
+
 import pandas as pd
-from pathlib import Path
 import re
+from pathlib import Path
+from base_step import BaseStep
+from config import DATA_DIR, MB_RAW_DIR
+from utils import normalize_title, is_mostly_digits
 
-# --- Config ---
-INPUT_SOUNDTRACKS = Path("D:/Capstone_Staging/data/soundtracks.tsv")
-JUNK_TITLES_FILE = Path("D:/Capstone_Staging/data/musicbrainz_raw/junk_mb_titles.txt")
-OUTPUT_CANDIDATES = Path("D:/Capstone_Staging/data/tmdb/tmdb_input_candidates.csv")
+class Step06PrepareTMDbInput(BaseStep):
+    def __init__(self, name="Step 06: Prepare TMDb Input"):
+        super().__init__(name)
+        self.input_path = DATA_DIR / "soundtracks.tsv"
+        self.junk_titles_path = MB_RAW_DIR / "junk_mb_titles.txt"
+        self.output_path = DATA_DIR / "tmdb" / "tmdb_input_candidates.csv"
 
-# --- Load soundtrack columns ---
-soundtrack_cols = [
-    "release_group_id", "mbid", "title", "release_year", "artist_id", "artist_credit_id",
-    "artist_name", "type", "primary_type", "barcode", "dummy_1",
-    "dummy_2", "dummy_3", "dummy_4", "dummy_5", "artist_sort_name",
-    "dummy_6", "dummy_7", "created", "dummy_8", "artist_gid"
-]
+        # Define expected columns
+        self.columns = [
+            "release_group_id", "mbid", "title", "release_year", "artist_id", "artist_credit_id",
+            "artist_name", "type", "primary_type", "barcode", "dummy_1",
+            "dummy_2", "dummy_3", "dummy_4", "dummy_5", "artist_sort_name",
+            "dummy_6", "dummy_7", "created", "dummy_8", "artist_gid"
+        ]
 
-def normalize_title(title):
-    if pd.isna(title):
-        return ""
-    return re.sub(r"[^a-z0-9\s]", "", title.lower()).strip()
+    def run(self):
+        if not self.input_path.exists():
+            self.logger.error(f"Missing input file: {self.input_path}")
+            return
 
-def main():
-    print("🔍 Loading soundtracks...")
-    df = pd.read_csv(INPUT_SOUNDTRACKS, sep="\t", names=soundtrack_cols, header=None, dtype=str)
+        self.logger.info("🔍 Loading soundtracks...")
+        df = pd.read_csv(self.input_path, sep="\t", names=self.columns, header=None, dtype=str)
 
-    print("🔧 Normalizing titles...")
-    df["normalized_title"] = df["title"].apply(normalize_title)
-    df = df[df["normalized_title"].str.len() >= 3]
+        self.logger.info("🔧 Normalizing titles...")
+        df["normalized_title"] = df["title"].apply(normalize_title)
+        df = df[df["normalized_title"].str.len() >= 3]
 
-    if JUNK_TITLES_FILE.exists():
-        junk = set(Path(JUNK_TITLES_FILE).read_text(encoding="utf-8").splitlines())
-        df = df[~df["normalized_title"].isin(junk)]
+        # Filter out bad or missing release years
+        df["release_year"] = pd.to_numeric(df["release_year"], errors="coerce")
+        df = df[df["release_year"].between(1900, 2025)]
+        df = df.dropna(subset=["release_year"])
 
-    print("🧼 Filtering duplicates and junk...")
-    df = df.drop_duplicates(subset=["normalized_title"])
-    output_df = df[["normalized_title", "release_group_id"]].copy()
+        if self.junk_titles_path.exists():
+            junk = set(self.junk_titles_path.read_text(encoding="utf-8").splitlines())
+            df = df[~df["normalized_title"].isin(junk)]
+            self.logger.info(f"🧼 Filtered junk titles — remaining: {len(df):,}")
 
-    print(f"✅ Final output row count: {len(output_df):,}")
-    OUTPUT_CANDIDATES.parent.mkdir(parents=True, exist_ok=True)
-    output_df.to_csv(OUTPUT_CANDIDATES, index=False)
-    print(f"✅ Saved to {OUTPUT_CANDIDATES}")
+        df = df.drop_duplicates(subset=["normalized_title"])
+        output_df = df[["normalized_title", "release_group_id"]].copy()
 
-if __name__ == "__main__":
-    main()
+        self.output_path.parent.mkdir(parents=True, exist_ok=True)
+        output_df.to_csv(self.output_path, index=False)
+        self.logger.info(f"✅ Final output row count: {len(output_df):,}")
+        self.logger.info(f"✅ Saved to {self.output_path}")

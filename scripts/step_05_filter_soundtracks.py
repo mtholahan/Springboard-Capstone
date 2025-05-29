@@ -5,7 +5,7 @@ from base_step import BaseStep
 from config import DATA_DIR, MB_RAW_DIR
 
 class Step05FilterSoundtracks(BaseStep):
-    def __init__(self, name):
+    def __init__(self, name="Step 05: Filter Soundtracks"):
         super().__init__(name)
 
     def load_secondary_type_map(self):

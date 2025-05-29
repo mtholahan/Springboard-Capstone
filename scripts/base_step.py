@@ -18,20 +18,28 @@ class BaseStep:
         log_dir.mkdir(parents=True, exist_ok=True)
         log_file = log_dir / f"{self.name}.log"
 
+        try:
+            sys.stdout.reconfigure(encoding='utf-8')  # Ensure stdout supports UTF-8
+        except AttributeError:
+            # Fallback for Python versions < 3.7
+            import io
+            sys.stdout = io.TextIOWrapper(sys.stdout.detach(), encoding='utf-8')
+
         logging.basicConfig(
             level=logging.INFO,
             format="%(asctime)s [%(levelname)s] %(message)s",
             handlers=[
-                logging.FileHandler(log_file),
+                logging.FileHandler(log_file, encoding='utf-8'),
                 logging.StreamHandler(sys.stdout)
             ]
         )
         self.logger = logging.getLogger(self.name)
         self.logger.info(f"Initialized step: {self.name}")
 
-    def progress_iter(self, iterable, desc=None):
-        return tqdm(iterable, desc=desc or self.name)
+    def progress_iter(self, iterable, **kwargs):
+        if 'desc' not in kwargs:
+            kwargs['desc'] = self.name
+        return tqdm(iterable, **kwargs)
 
     def run(self):
         raise NotImplementedError("Subclasses must implement a run() method.")
-
